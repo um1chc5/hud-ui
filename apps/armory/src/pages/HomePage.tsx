@@ -1,4 +1,4 @@
-import { TextScramble } from '@hud-ui/core'
+import { TextScramble } from '@hud-ui/ui'
 
 export function HomePage() {
   return (
@@ -8,23 +8,21 @@ export function HomePage() {
           <TextScramble text="HUD UI / ARMORY" duration={900} />
         </h1>
         <p>
-          A live playground for every component in <code>@hud-ui/core</code>. Pick a component on
-          the left. Flip the global skin / palette / glow / motion toggles in the top bar — every
-          page re-renders in both skins side by side so you can see the contract hold.
+          Private high-tech HUD kit — ownable source you copy into an app, shadcn-style. Flip
+          palette / glow / motion / grid in the top bar. Every component page has a live demo and
+          keyboard cheatsheet.
         </p>
       </header>
 
       <section>
         <h2 className="armory-section-title">What's inside</h2>
         <dl className="armory-props">
-          <dt>@hud-ui/tokens</dt>
-          <dd>CSS custom properties + TS constants for palettes, spacing, motion, chamfer.</dd>
-          <dt>@hud-ui/core</dt>
-          <dd>Headless hooks and components. No CSS, no classNames.</dd>
-          <dt>@hud-ui/skin-hud</dt>
-          <dd>Chamfered panels, corner brackets, accent glow, custom scrollbar.</dd>
-          <dt>@hud-ui/skin-plain</dt>
-          <dd>Neutral baseline that proves the headless split works.</dd>
+          <dt>tokens.css</dt>
+          <dd>Four palettes (steel, teal, thermal, day), type, spacing, chamfer, motion.</dd>
+          <dt>components/ui</dt>
+          <dd>Dialog, Tabs, Toggle, Meter, TextScramble, ScrollPanel — Tailwind + react-aria.</dd>
+          <dt>components/hud</dt>
+          <dd>Decorative only: CornerBrackets, ChamferFrame, GridBg.</dd>
         </dl>
       </section>
 

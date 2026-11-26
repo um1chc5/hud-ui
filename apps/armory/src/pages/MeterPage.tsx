@@ -1,71 +1,48 @@
-import { useEffect, useState } from 'react'
-import { Meter } from '@hud-ui/core'
-import { SplitPreview } from '../SplitPreview'
+import { Meter } from '@hud-ui/ui'
 
 export function MeterPage() {
-  const [value, setValue] = useState(42)
-  useEffect(() => {
-    const id = setInterval(() => {
-      setValue((v) => Math.min(100, Math.max(0, v + (Math.random() * 20 - 10))))
-    }, 1400)
-    return () => clearInterval(id)
-  }, [])
-
   return (
     <>
       <header className="armory-page-header">
         <h1>Meter</h1>
         <p>
-          Native ARIA <code>role="meter"</code>. Three variants — <code>"bar"</code>,{' '}
-          <code>"ring"</code>, <code>"segments"</code> — all share the same data contract so skins
-          can style each form independently.
+          Scalar readout with <code>role=&quot;meter&quot;</code>. Variants: bar, segments, ring.
+          Glow on the fill only — never on the label text.
         </p>
       </header>
 
       <section>
         <h2 className="armory-section-title">Live</h2>
-        <SplitPreview render={() => <MeterDemo value={value} />} />
+        <div className="armory-demo">
+          <Meter label="Signal" value={72} />
+          <Meter label="Ammo" value={40} variant="segments" segments={10} />
+          <Meter label="Shield" value={86} variant="ring" />
+        </div>
       </section>
 
       <section>
         <h2 className="armory-section-title">Props</h2>
         <dl className="armory-props">
           <dt>value · min · max</dt>
-          <dd>
-            Numeric range. <code>value</code> is clamped into <code>[min, max]</code>.
-          </dd>
+          <dd>Clamped into range; drives ARIA valuemin/now/max.</dd>
           <dt>label</dt>
-          <dd>Visible label and accessible name.</dd>
+          <dd>Visible + accessible name.</dd>
           <dt>variant</dt>
           <dd>
-            <code>"bar"</code> (default) · <code>"ring"</code> · <code>"segments"</code>.
-          </dd>
-          <dt>segments</dt>
-          <dd>
-            Segment count when <code>variant="segments"</code>. Default 10.
+            <code>bar</code> | <code>segments</code> | <code>ring</code>
           </dd>
           <dt>formatValue</dt>
-          <dd>
-            Override the numeric readout. The returned string is also used for{' '}
-            <code>aria-valuetext</code>.
-          </dd>
+          <dd>Custom readout + aria-valuetext.</dd>
+        </dl>
+      </section>
+
+      <section>
+        <h2 className="armory-section-title">Keyboard</h2>
+        <dl className="armory-props">
+          <dt>—</dt>
+          <dd>Read-only. Focusable only if you wrap it.</dd>
         </dl>
       </section>
     </>
-  )
-}
-
-function MeterDemo({ value }: { value: number }) {
-  return (
-    <div style={{ display: 'grid', gap: 18 }}>
-      <Meter value={value} label="Signal" variant="bar" />
-      <Meter value={value} label="Energy" variant="segments" segments={12} />
-      <Meter
-        value={value}
-        label="Shield"
-        variant="ring"
-        formatValue={(_v: number, n: number) => `${Math.round(n)}%`}
-      />
-    </div>
   )
 }

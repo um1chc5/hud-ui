@@ -1,68 +1,90 @@
 # hud-ui
 
-Headless React component library with two interchangeable skins — a dense
-mission-control **HUD** skin and a neutral **plain** skin that proves the
-split works.
+Private high-tech **HUD** UI kit — ownable source, shadcn-style. One visual
+system (chamfered panels, corner brackets, mono labels, glow, grid, text
+scramble). Not a multi-package headless library.
 
 ```
-packages/
-  tokens/      CSS custom properties + TS constants
-  core/        headless hooks + unstyled components (behaviour only)
-  skin-hud/    chamfered HUD skin + decorative parts
-  skin-plain/  minimal neutral CSS that targets the same selectors
-apps/
-  armory/      Vite playground with every component in both skins
+packages/ui/          tokens + components (copy into your app)
+apps/armory/          Vite playground
 ```
-
-See [`docs/RULES.md`](./docs/RULES.md) for the contract that keeps `core` and
-the skins separated, and [`docs/ROADMAP.md`](./docs/ROADMAP.md) for what's
-next.
 
 ## Quick start
 
 ```bash
 pnpm install
-pnpm dev        # starts the armory at http://localhost:5173
-pnpm build      # builds every package + the armory
-pnpm test       # Vitest (keyboard + axe, both skins)
-pnpm typecheck  # tsc --noEmit across all workspaces
-pnpm lint       # oxlint
+pnpm dev        # armory at http://localhost:5173
+pnpm build
+pnpm test
+pnpm typecheck
+pnpm lint
 ```
 
-## Using the library
+## Copy a component into another app
+
+1. Ensure the app has Tailwind v4, React 19, and (for Dialog/Tabs/Toggle)
+   `react-aria` + `react-stately`.
+2. Copy `packages/ui/src/styles/tokens.css` and `hud.css`, then import them
+   once at the app root.
+3. Copy `lib/utils.ts` (`cn`) and any hooks the component needs.
+4. Copy the component file(s) from `components/ui/` (and decorative parts
+   from `components/hud/` if used).
+5. Set appearance attrs on `<html>`:
+
+```html
+<html
+  data-hud-palette="steel"
+  data-hud-glow="on"
+  data-hud-motion="on"
+  data-hud-grid="on"
+></html>
+```
+
+Palettes: `steel` · `teal` · `thermal` · `day`.
+
+Example after copy:
 
 ```tsx
-import '@hud-ui/tokens/styles.css'
-import '@hud-ui/skin-hud/styles.css' // or '@hud-ui/skin-plain/styles.css'
-
-import { Dialog, Tabs, Toggle, Meter, TextScramble, ScrollPanel } from '@hud-ui/core'
-import { CornerBrackets, GlitchText } from '@hud-ui/skin-hud'
+import { Dialog, Meter, TextScramble } from './components/ui'
 
 function App() {
   return (
-    <div data-skin="hud" data-hud-palette="steel" data-hud-glow="on" data-hud-motion="on">
+    <>
       <TextScramble text="SYSTEM ONLINE" />
       <Meter value={62} label="Signal" variant="segments" />
-    </div>
+    </>
   )
 }
 ```
 
-Switch skins by changing `data-skin` on `<html>` (or any ancestor). The core
-components don't care — they only emit data attributes; the active skin's CSS
-picks them up.
+Or consume via the workspace package during monorepo development:
+
+```tsx
+import '@hud-ui/ui/styles/tokens.css'
+import '@hud-ui/ui/styles/hud.css'
+import { Dialog, Tabs, Toggle, Meter, TextScramble, ScrollPanel } from '@hud-ui/ui'
+```
 
 ## Components (Phase 1)
 
-| Component      | Behaviour backend     | A11y surface                       |
-| -------------- | --------------------- | ---------------------------------- |
-| `Dialog`       | react-aria overlay    | `role="dialog"`, modal, focus trap |
-| `Tabs`         | react-aria tabs       | Roving tabindex, arrows            |
-| `Toggle`       | react-aria toggle btn | `aria-pressed`                     |
-| `Meter`        | native ARIA           | `role="meter"`, valuemin/now/text  |
-| `TextScramble` | custom rAF hook       | `aria-label` + reduced-motion safe |
-| `ScrollPanel`  | custom hook           | `role="region"`, keyboard scroll   |
+| Component      | Behaviour              | A11y                                      |
+| -------------- | ---------------------- | ----------------------------------------- |
+| `Dialog`       | react-aria overlay     | modal, focus trap, Esc, return focus      |
+| `Tabs`         | react-aria tabs        | roving tabindex, arrows                   |
+| `Toggle`       | react-aria toggle btn  | `aria-pressed`                            |
+| `Meter`        | native ARIA            | `role="meter"`                            |
+| `TextScramble` | custom rAF             | final `aria-label`; reduced-motion safe   |
+| `ScrollPanel`  | custom                 | `role="region"`, keyboard scroll          |
 
-Every component has a dedicated page in the armory with a props cheatsheet
-and keyboard shortcuts, rendered in the HUD skin and the plain skin side by
-side.
+Decorative: `CornerBrackets`, `ChamferFrame`, `GridBg`.
+
+## Motion rules (ported from the game HUD)
+
+- Animate with **opacity**, **clip-path**, and the individual **`translate`**
+  property — never `transform` / `translateZ` / `scale` on layers that hold
+  body text.
+- Every effect honours `prefers-reduced-motion` and `data-hud-motion="off"`.
+- Glow on accents only. Day palette uses crisp outlines instead of blur glow.
+- Body text WCAG AA (≥ 4.5:1) on panel fills in every palette.
+
+See [`docs/ROADMAP.md`](./docs/ROADMAP.md) for what's next.

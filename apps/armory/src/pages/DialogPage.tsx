@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import { Dialog, Toggle } from '@hud-ui/core'
-import { CornerBrackets } from '@hud-ui/skin-hud'
-import { SplitPreview } from '../SplitPreview'
+import { Dialog, Toggle } from '@hud-ui/ui'
 
 export function DialogPage() {
   return (
@@ -9,15 +7,17 @@ export function DialogPage() {
       <header className="armory-page-header">
         <h1>Dialog</h1>
         <p>
-          Modal dialog built on react-aria overlays. Portals to <code>document.body</code>, locks
-          page scroll, traps focus, and returns focus to the trigger on close. Skins target{' '}
-          <code>[data-hud-dialog]</code> and <code>[data-hud-dialog-overlay]</code>.
+          Modal dialog on react-aria overlays. Portals to <code>document.body</code>, locks scroll,
+          traps focus, returns focus on close. Chamfered panel + corner brackets + boot-style open
+          (opacity / translate / clip-path).
         </p>
       </header>
 
       <section>
         <h2 className="armory-section-title">Live</h2>
-        <SplitPreview render={(skin) => <DialogDemo skin={skin} />} />
+        <div className="armory-demo">
+          <DialogDemo />
+        </div>
       </section>
 
       <section>
@@ -26,15 +26,17 @@ export function DialogPage() {
           <dt>isOpen · onOpenChange</dt>
           <dd>Controlled visibility. Required.</dd>
           <dt>title</dt>
-          <dd>Rendered as the dialog heading and used for the accessible name.</dd>
+          <dd>Dialog heading and accessible name.</dd>
           <dt>isDismissable</dt>
           <dd>
-            Click on scrim closes. Default <code>true</code>.
+            Scrim click closes. Default <code>true</code>.
           </dd>
           <dt>isKeyboardDismissDisabled</dt>
           <dd>
             When <code>true</code>, Esc no longer closes.
           </dd>
+          <dt>className</dt>
+          <dd>Merged onto the panel via <code>cn()</code>.</dd>
         </dl>
       </section>
 
@@ -44,25 +46,24 @@ export function DialogPage() {
           <dt>Esc</dt>
           <dd>Close.</dd>
           <dt>Tab · Shift+Tab</dt>
-          <dd>Move focus inside the dialog (focus is trapped).</dd>
+          <dd>Move focus inside the dialog (trapped).</dd>
         </dl>
       </section>
     </>
   )
 }
 
-function DialogDemo({ skin }: { skin: 'hud' | 'plain' }) {
+function DialogDemo() {
   const [open, setOpen] = useState(false)
   return (
     <>
-      <Toggle isSelected={open} onChange={setOpen} aria-label={`Open ${skin} dialog`}>
+      <Toggle isSelected={open} onChange={setOpen} aria-label="Open dialog">
         {open ? 'Close dialog' : 'Open dialog'}
       </Toggle>
       <Dialog isOpen={open} onOpenChange={setOpen} title="Mission briefing">
-        {skin === 'hud' ? <CornerBrackets /> : null}
         <p>
-          A controlled modal dialog. Focus starts on the first focusable element inside the panel
-          and returns to the opening Toggle when you press Esc or click outside.
+          Controlled modal. Focus starts on the first focusable element and returns to the opening
+          Toggle on Esc or outside click.
         </p>
         <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
           <Toggle isSelected={false} onChange={() => setOpen(false)}>

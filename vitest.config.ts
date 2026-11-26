@@ -13,27 +13,15 @@ export default defineConfig({
   },
   resolve: {
     alias: [
-      // CSS sub-paths — exercise the shipping `./styles.css` export in tests.
       {
-        find: '@hud-ui/tokens/styles.css',
-        replacement: path.resolve(__dirname, 'packages/tokens/src/tokens.css'),
+        find: '@hud-ui/ui/styles/tokens.css',
+        replacement: path.resolve(__dirname, 'packages/ui/src/styles/tokens.css'),
       },
       {
-        find: '@hud-ui/skin-hud/styles.css',
-        replacement: path.resolve(__dirname, 'packages/skin-hud/src/styles.css'),
+        find: '@hud-ui/ui/styles/hud.css',
+        replacement: path.resolve(__dirname, 'packages/ui/src/styles/hud.css'),
       },
-      {
-        find: '@hud-ui/skin-plain/styles.css',
-        replacement: path.resolve(__dirname, 'packages/skin-plain/src/styles.css'),
-      },
-      // Package entry points → source during dev + tests (no rebuild needed).
-      { find: '@hud-ui/core', replacement: path.resolve(__dirname, 'packages/core/src') },
-      { find: '@hud-ui/tokens', replacement: path.resolve(__dirname, 'packages/tokens/src') },
-      { find: '@hud-ui/skin-hud', replacement: path.resolve(__dirname, 'packages/skin-hud/src') },
-      {
-        find: '@hud-ui/skin-plain',
-        replacement: path.resolve(__dirname, 'packages/skin-plain/src'),
-      },
+      { find: '@hud-ui/ui', replacement: path.resolve(__dirname, 'packages/ui/src') },
     ],
   },
 })

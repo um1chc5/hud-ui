@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react'
 
 export type Route =
-  'home' | 'dialog' | 'tabs' | 'toggle' | 'meter' | 'text-scramble' | 'scroll-panel'
+  | 'home'
+  | 'dialog'
+  | 'tabs'
+  | 'toggle'
+  | 'meter'
+  | 'text-scramble'
+  | 'scroll-panel'
 
-const VALID: readonly Route[] = [
+const ROUTES = new Set<string>([
   'home',
   'dialog',
   'tabs',
@@ -11,16 +17,18 @@ const VALID: readonly Route[] = [
   'meter',
   'text-scramble',
   'scroll-panel',
-]
+])
 
 function parse(): Route {
-  if (typeof window === 'undefined') return 'home'
-  const raw = window.location.hash.replace(/^#\/?/, '') || 'home'
-  return (VALID as readonly string[]).includes(raw) ? (raw as Route) : 'home'
+  const raw = window.location.hash.replace(/^#\/?/, '')
+  if (!raw || raw === 'home') return 'home'
+  return ROUTES.has(raw) ? (raw as Route) : 'home'
 }
 
 export function useHashRoute(): Route {
-  const [route, setRoute] = useState<Route>(parse)
+  const [route, setRoute] = useState<Route>(() =>
+    typeof window === 'undefined' ? 'home' : parse(),
+  )
   useEffect(() => {
     const onHash = () => setRoute(parse())
     window.addEventListener('hashchange', onHash)

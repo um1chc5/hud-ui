@@ -1,0 +1,338 @@
+/* ==========================================================================
+   HUD chrome — chamfer, glow, scrollbars, boot motion
+   Complements Tailwind utilities on components. Glow accents only;
+   day palette uses crisp outlines (no blur glow).
+   ========================================================================== */
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--hud-font-body);
+  font-size: 15.5px;
+  line-height: 1.5;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 0;
+}
+
+/* ---- Dialog ------------------------------------------------------------ */
+
+[data-hud-dialog-overlay] {
+  transition: opacity var(--hud-duration) var(--hud-ease);
+}
+
+[data-hud-dialog-overlay][data-state='closed'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+[data-hud-dialog] {
+  clip-path: var(--hud-chamfer-polygon);
+  translate: 0 0;
+  opacity: 1;
+  transition:
+    opacity var(--hud-duration) var(--hud-ease),
+    translate var(--hud-duration) var(--hud-ease),
+    clip-path var(--hud-duration) var(--hud-ease);
+}
+
+[data-hud-dialog][data-state='closed'] {
+  opacity: 0;
+  translate: 0 8px;
+}
+
+[data-hud-dialog-title].hud-glow-title {
+  color: var(--accent);
+  text-shadow:
+    0 0 8px var(--glow-color),
+    0 0 2px var(--glow-color);
+}
+
+:root[data-hud-glow='on'] [data-hud-dialog-title] {
+  color: var(--accent);
+  text-shadow:
+    0 0 8px var(--glow-color),
+    0 0 2px var(--glow-color);
+}
+
+:root[data-hud-palette='day'][data-hud-glow='on'] [data-hud-dialog-title] {
+  text-shadow: none;
+  color: var(--accent-d);
+}
+
+:root[data-hud-glow='off'] [data-hud-dialog-title] {
+  text-shadow: none;
+}
+
+/* ---- Corner brackets --------------------------------------------------- */
+
+[data-hud-corner-brackets] {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+[data-hud-corner-brackets]::before,
+[data-hud-corner-brackets]::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 0 solid var(--accent);
+  border-width: 2px;
+}
+
+[data-hud-corner-brackets]::before {
+  top: 4px;
+  left: 4px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+[data-hud-corner-brackets]::after {
+  bottom: 4px;
+  right: 4px;
+  border-left: 0;
+  border-top: 0;
+}
+
+/* ---- Tabs / Toggle shared accent glow ---------------------------------- */
+
+:root[data-hud-glow='on'] [data-hud-tab][data-selected='true'],
+:root[data-hud-glow='on'] [data-hud-toggle][data-pressed='true'] {
+  box-shadow:
+    inset 0 0 18px -10px var(--glow-color),
+    0 0 10px -4px var(--glow-color);
+}
+
+:root[data-hud-palette='day'][data-hud-glow='on'] [data-hud-tab][data-selected='true'],
+:root[data-hud-palette='day'][data-hud-glow='on'] [data-hud-toggle][data-pressed='true'] {
+  box-shadow: none;
+}
+
+[data-hud-tab],
+[data-hud-toggle] {
+  clip-path: var(--hud-chamfer-polygon);
+  transition:
+    color var(--hud-duration-fast) var(--hud-ease),
+    background-color var(--hud-duration-fast) var(--hud-ease),
+    border-color var(--hud-duration-fast) var(--hud-ease);
+}
+
+/* ---- Meter ------------------------------------------------------------- */
+
+[data-hud-meter-track] {
+  clip-path: polygon(0 0, 100% 0, calc(100% - 4px) 100%, 4px 100%);
+}
+
+[data-hud-meter][data-variant='segments'] [data-hud-meter-track],
+[data-hud-meter][data-variant='ring'] [data-hud-meter-track] {
+  clip-path: none;
+}
+
+[data-hud-meter-fill] {
+  width: var(--hud-meter-pct, 0%);
+  transition: width var(--hud-duration) var(--hud-ease);
+}
+
+:root[data-hud-glow='on'] [data-hud-meter-fill] {
+  box-shadow: 0 0 10px var(--glow-color);
+}
+
+:root[data-hud-palette='day'][data-hud-glow='on'] [data-hud-meter-fill] {
+  box-shadow: none;
+}
+
+[data-hud-meter-segment] {
+  clip-path: polygon(0 0, 100% 0, calc(100% - 3px) 100%, 3px 100%);
+}
+
+:root[data-hud-glow='on'] [data-hud-meter-segment][data-on='true'] {
+  box-shadow: 0 0 6px var(--glow-color);
+}
+
+:root[data-hud-palette='day'][data-hud-glow='on'] [data-hud-meter-segment][data-on='true'] {
+  box-shadow: none;
+}
+
+[data-hud-meter-ring] circle[data-role='track'] {
+  stroke: var(--line);
+  stroke-width: 4;
+}
+
+[data-hud-meter-ring] circle[data-role='fill'] {
+  stroke: var(--accent);
+  stroke-width: 4;
+  transition: stroke-dashoffset var(--hud-duration) var(--hud-ease);
+}
+
+:root[data-hud-glow='on'] [data-hud-meter-ring] circle[data-role='fill'] {
+  filter: drop-shadow(0 0 4px var(--glow-color));
+}
+
+:root[data-hud-palette='day'][data-hud-glow='on'] [data-hud-meter-ring] circle[data-role='fill'] {
+  filter: none;
+}
+
+/* ---- TextScramble ------------------------------------------------------- */
+
+[data-hud-text-scramble][data-phase='running'] {
+  color: var(--accent);
+}
+
+/* ---- ScrollPanel ------------------------------------------------------- */
+
+[data-hud-scroll-panel] {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% 100%,
+    12px 100%,
+    0 calc(100% - 12px)
+  );
+}
+
+[data-hud-scroll-panel]::before,
+[data-hud-scroll-panel]::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--accent);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 3;
+}
+
+[data-hud-scroll-panel]::before {
+  top: 4px;
+  left: 4px;
+  border-width: 2px 0 0 2px;
+}
+
+[data-hud-scroll-panel]::after {
+  bottom: 4px;
+  right: 4px;
+  border-width: 0 2px 2px 0;
+}
+
+[data-hud-scroll-panel-body] {
+  --fade-top: 0px;
+  --fade-bot: 0px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+
+[data-hud-scroll-panel-body][data-scrollable='true'] {
+  --fade-top: 24px;
+  --fade-bot: 24px;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 var(--fade-top),
+    #000 calc(100% - var(--fade-bot)),
+    transparent
+  );
+}
+
+[data-hud-scroll-panel-body][data-at-top='true'] {
+  --fade-top: 0px;
+}
+
+[data-hud-scroll-panel-body][data-at-bottom='true'] {
+  --fade-bot: 0px;
+}
+
+[data-hud-scroll-panel-body]::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+[data-hud-scroll-panel-body]::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+[data-hud-scroll-panel-body]::-webkit-scrollbar-track {
+  background:
+    linear-gradient(
+      to right,
+      transparent 2px,
+      color-mix(in srgb, var(--line) 75%, transparent) 2px,
+      color-mix(in srgb, var(--line) 75%, transparent) 4px,
+      transparent 4px
+    ),
+    repeating-linear-gradient(to bottom, var(--accent) 0 1px, transparent 1px 10%);
+}
+
+[data-hud-scroll-panel-body]::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    135deg,
+    transparent 3px,
+    var(--accent) 3px,
+    var(--accent) calc(100% - 3px),
+    transparent calc(100% - 3px)
+  );
+  border-radius: 0;
+}
+
+:root[data-hud-glow='on'] [data-hud-scroll-panel-body]::-webkit-scrollbar-thumb:hover,
+:root[data-hud-glow='on'] [data-hud-scroll-panel-body]::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(
+    135deg,
+    transparent 3px,
+    color-mix(in srgb, var(--accent) 85%, var(--thumb-hover-mix, #ffffff)) 3px,
+    color-mix(in srgb, var(--accent) 85%, var(--thumb-hover-mix, #ffffff)) calc(100% - 3px),
+    transparent calc(100% - 3px)
+  );
+  box-shadow: 0 0 8px var(--glow-color);
+}
+
+:root[data-hud-palette='day'][data-hud-glow='on']
+  [data-hud-scroll-panel-body]::-webkit-scrollbar-thumb:hover,
+:root[data-hud-palette='day'][data-hud-glow='on']
+  [data-hud-scroll-panel-body]::-webkit-scrollbar-thumb:active {
+  box-shadow: none;
+}
+
+/* ---- Chamfer helper ---------------------------------------------------- */
+
+[data-hud-chamfer] {
+  clip-path: var(--hud-chamfer-polygon);
+}
+
+[data-hud-chamfer][data-size='sm'] {
+  --hud-chamfer: var(--hud-chamfer-sm);
+}
+
+[data-hud-chamfer][data-size='lg'] {
+  --hud-chamfer: var(--hud-chamfer-lg);
+}
+
+/* ---- Reduced motion ---------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-hud-scroll-panel-body] {
+    scroll-behavior: auto !important;
+  }
+  [data-hud-dialog],
+  [data-hud-dialog-overlay],
+  [data-hud-tab],
+  [data-hud-toggle],
+  [data-hud-meter-fill] {
+    transition: none !important;
+  }
+}
+
+:root[data-hud-motion='off'] [data-hud-dialog],
+:root[data-hud-motion='off'] [data-hud-dialog-overlay],
+:root[data-hud-motion='off'] [data-hud-tab],
+:root[data-hud-motion='off'] [data-hud-toggle],
+:root[data-hud-motion='off'] [data-hud-meter-fill] {
+  transition: none !important;
+}

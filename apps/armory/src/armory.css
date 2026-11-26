@@ -1,5 +1,23 @@
-/* Armory chrome. Deliberately minimal — the point is the components, not
-   the shell. The shell uses the active global skin's tokens where possible. */
+@import 'tailwindcss';
+@source '../../../packages/ui/src';
+@source './**/*.{ts,tsx}';
+
+@theme {
+  --font-display: var(--hud-font-display);
+  --font-body: var(--hud-font-body);
+  --font-mono: var(--hud-font-mono);
+  --color-paper: var(--paper);
+  --color-sheet: var(--sheet-solid);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-ok: var(--ok);
+  --color-bad: var(--bad);
+  --color-mark: var(--mark);
+  --color-scrim: var(--scrim);
+}
 
 * {
   box-sizing: border-box;
@@ -20,232 +38,191 @@ a {
   grid-template-columns: 240px minmax(0, 1fr);
   grid-template-rows: auto minmax(0, 1fr);
   min-height: 100vh;
-  gap: 0;
 }
 
 .armory-topbar {
   grid-column: 1 / -1;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
   padding: 12px 20px;
-  border-bottom: 1px solid var(--line, #26394b);
-  background: color-mix(in srgb, var(--sheet-solid, #0e161e) 94%, transparent);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  backdrop-filter: blur(6px);
-}
-
-[data-skin='plain'] .armory-topbar {
-  background: var(--plain-bg, #ffffff);
-  border-color: var(--plain-line, #d4d8dd);
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--sheet-solid) 88%, transparent);
 }
 
 .armory-brand {
-  font-family: var(--hud-font-display, system-ui);
-  letter-spacing: 0.1em;
+  font-family: var(--hud-font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  font-weight: 600;
-  font-size: 15px;
+  color: var(--accent);
 }
 
 .armory-toggles {
   display: flex;
-  align-items: center;
-  gap: 8px;
   flex-wrap: wrap;
-  font-family: var(--hud-font-mono, ui-monospace);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  gap: 12px;
 }
 
 .armory-toggles label {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 6px;
-  color: var(--muted, #8499ab);
-}
-
-[data-skin='plain'] .armory-toggles label {
-  color: var(--plain-muted, #555b63);
+  font-family: var(--hud-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
 .armory-toggles select {
-  background: transparent;
-  color: inherit;
-  border: 1px solid var(--line, #26394b);
-  padding: 4px 6px;
-  font: inherit;
-}
-
-[data-skin='plain'] .armory-toggles select {
-  border-color: var(--plain-line, #d4d8dd);
-  color: var(--plain-fg, #111);
+  appearance: none;
+  background: var(--soft);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  padding: 4px 8px;
+  font-family: var(--hud-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
 }
 
 .armory-nav {
-  padding: 16px;
-  border-right: 1px solid var(--line, #26394b);
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-height: 100%;
-}
-
-[data-skin='plain'] .armory-nav {
-  border-color: var(--plain-line, #d4d8dd);
+  border-right: 1px solid var(--line);
+  padding: 20px 16px;
+  background: color-mix(in srgb, var(--sheet-solid) 70%, transparent);
 }
 
 .armory-nav h3 {
-  font-family: var(--hud-font-mono, ui-monospace);
-  font-size: 10.5px;
-  letter-spacing: 0.18em;
-  color: var(--muted, #8499ab);
+  margin: 0 0 12px;
+  font-family: var(--hud-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  margin: 0 0 4px;
+  color: var(--muted);
 }
 
 .armory-nav a {
   display: block;
-  padding: 7px 10px;
-  color: var(--ink, #c3d0da);
-  font-family: var(--hud-font-mono, ui-monospace);
+  padding: 8px 10px;
+  margin-bottom: 4px;
+  font-family: var(--hud-font-mono);
   font-size: 12px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: var(--muted);
   border: 1px solid transparent;
 }
 
 .armory-nav a:hover {
-  border-color: var(--accent-d, #4d738f);
+  color: var(--ink);
+  border-color: var(--line);
 }
 
 .armory-nav a[aria-current='page'] {
-  color: var(--on-accent, #060b10);
-  background: var(--accent, #7fa7c4);
-  border-color: var(--accent, #7fa7c4);
-}
-
-[data-skin='plain'] .armory-nav a[aria-current='page'] {
-  color: var(--plain-accent-fg, #ffffff);
-  background: var(--plain-accent, #2563eb);
-  border-color: var(--plain-accent, #2563eb);
+  color: var(--on-accent);
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .armory-main {
-  padding: 24px;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  overflow: auto;
+  padding: 28px 32px 48px;
+  max-width: 880px;
 }
 
 .armory-page-header h1 {
-  margin: 0 0 4px;
-  font-family: var(--hud-font-display, system-ui);
-  letter-spacing: 0.1em;
+  margin: 0 0 8px;
+  font-family: var(--hud-font-display);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  font-size: 22px;
+  color: var(--ink);
 }
 
 .armory-page-header p {
-  margin: 0;
-  color: var(--muted, #8499ab);
-  max-width: 68ch;
-  line-height: 1.5;
-}
-
-[data-skin='plain'] .armory-page-header p {
-  color: var(--plain-muted, #555b63);
+  margin: 0 0 28px;
+  color: var(--muted);
+  max-width: 58ch;
 }
 
 .armory-section-title {
-  font-family: var(--hud-font-mono, ui-monospace);
+  margin: 0 0 12px;
+  font-family: var(--hud-font-mono);
   font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--muted, #8499ab);
-  margin: 8px 0 4px;
+  color: var(--accent);
+}
+
+.armory-main section {
+  margin-bottom: 32px;
 }
 
 .armory-props {
-  border: 1px solid var(--line, #26394b);
-  padding: 12px 14px;
-  font-family: var(--hud-font-mono, ui-monospace);
-  font-size: 12px;
-  line-height: 1.55;
-}
-
-[data-skin='plain'] .armory-props {
-  border-color: var(--plain-line, #d4d8dd);
+  display: grid;
+  grid-template-columns: minmax(120px, 180px) 1fr;
+  gap: 8px 16px;
+  margin: 0;
 }
 
 .armory-props dt {
-  color: var(--accent, #7fa7c4);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-family: var(--hud-font-mono);
   font-size: 11px;
-  margin-top: 6px;
-}
-
-.armory-props dt:first-child {
-  margin-top: 0;
+  letter-spacing: 0.08em;
+  color: var(--accent);
 }
 
 .armory-props dd {
-  margin: 0 0 4px;
-  color: var(--ink, #c3d0da);
+  margin: 0;
+  color: var(--ink);
+  font-size: 14px;
 }
 
-[data-skin='plain'] .armory-props dd {
-  color: var(--plain-fg, #111);
+.armory-demo {
+  padding: 20px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--sheet-solid) 82%, transparent);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% 100%,
+    12px 100%,
+    0 calc(100% - 12px)
+  );
 }
 
-.armory-split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.armory-demo > * + * {
+  margin-top: 16px;
 }
 
-@media (max-width: 960px) {
-  .armory-split {
+code {
+  font-family: var(--hud-font-mono);
+  font-size: 0.9em;
+  color: var(--accent);
+}
+
+@media (max-width: 800px) {
+  .armory {
     grid-template-columns: 1fr;
   }
-}
-
-.armory-split-side {
-  border: 1px solid var(--line, #26394b);
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  min-height: 220px;
-}
-
-.armory-split-side[data-skin='hud'] {
-  background: var(--paper, #06090d);
-  color: var(--ink, #c3d0da);
-  border-color: var(--line, #26394b);
-}
-
-.armory-split-side[data-skin='plain'] {
-  background: var(--plain-bg, #ffffff);
-  color: var(--plain-fg, #111);
-  border-color: var(--plain-line, #d4d8dd);
-}
-
-.armory-split-label {
-  font-family: var(--hud-font-mono, ui-monospace);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted, #8499ab);
-}
-
-.armory-split-side[data-skin='plain'] .armory-split-label {
-  color: var(--plain-muted, #555b63);
+  .armory-nav {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+  }
+  .armory-nav h3 {
+    width: 100%;
+  }
+  .armory-nav a {
+    margin: 0;
+  }
 }

@@ -1,29 +1,44 @@
 import { useState } from 'react'
-import { TextScramble, Toggle } from '@hud-ui/core'
-import { SplitPreview } from '../SplitPreview'
-
-const SAMPLES = ['SYSTEM ONLINE', 'TARGET LOCKED', 'STANDBY', 'DOSSIER / 0042']
+import { TextScramble, Toggle } from '@hud-ui/ui'
 
 export function TextScramblePage() {
-  const [index, setIndex] = useState(0)
-  const text = SAMPLES[index] ?? SAMPLES[0]!
+  const [key, setKey] = useState(0)
+  const [text, setText] = useState('SYSTEM ONLINE')
 
   return (
     <>
       <header className="armory-page-header">
         <h1>TextScramble</h1>
         <p>
-          rAF-driven character scramble. The accessible name (<code>aria-label</code>) always holds
-          the final text, so screen readers never hear random glyphs. Reduced motion or{' '}
-          <code>data-hud-motion="off"</code> snaps straight to the final string.
+          Glyph scramble toward final text. <code>aria-label</code> always holds the settled
+          string. Reduced motion / motion-off → instant final. Aborts on unmount or text change.
         </p>
       </header>
 
       <section>
         <h2 className="armory-section-title">Live</h2>
-        <SplitPreview render={() => <ScrambleDemo text={text} />} />
-        <div style={{ marginTop: 12 }}>
-          <Toggle onChange={() => setIndex((i) => (i + 1) % SAMPLES.length)}>Next phrase</Toggle>
+        <div className="armory-demo">
+          <TextScramble key={key} text={text} duration={900} />
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            <Toggle
+              isSelected={false}
+              onChange={() => {
+                setText('SYSTEM ONLINE')
+                setKey((k) => k + 1)
+              }}
+            >
+              Replay boot
+            </Toggle>
+            <Toggle
+              isSelected={false}
+              onChange={() => {
+                setText('CHANNEL LOCKED')
+                setKey((k) => k + 1)
+              }}
+            >
+              Swap text
+            </Toggle>
+          </div>
         </div>
       </section>
 
@@ -31,25 +46,23 @@ export function TextScramblePage() {
         <h2 className="armory-section-title">Props</h2>
         <dl className="armory-props">
           <dt>text</dt>
-          <dd>Final text. Changing this value starts a new scramble toward the new target.</dd>
+          <dd>Final (and accessible) string.</dd>
           <dt>duration</dt>
+          <dd>Scramble length in ms. Default 800.</dd>
+          <dt>as</dt>
           <dd>
-            Total scramble time in ms. Default <code>800</code>.
+            Element tag. Default <code>span</code>.
           </dd>
-          <dt>glyphs</dt>
-          <dd>Custom glyph pool.</dd>
-          <dt>onDone</dt>
-          <dd>Called when the scramble resolves (fires immediately under reduced motion).</dd>
+        </dl>
+      </section>
+
+      <section>
+        <h2 className="armory-section-title">Keyboard</h2>
+        <dl className="armory-props">
+          <dt>—</dt>
+          <dd>Decorative; screen readers hear the final label only.</dd>
         </dl>
       </section>
     </>
-  )
-}
-
-function ScrambleDemo({ text }: { text: string }) {
-  return (
-    <div style={{ fontSize: 28, letterSpacing: '0.12em' }}>
-      <TextScramble text={text} as="div" />
-    </div>
   )
 }

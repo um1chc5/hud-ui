@@ -5,3 +5,5 @@ dist
 coverage
 *.tsbuildinfo
 .vite
+.hud-refs
+apps/**/tsconfig.tsbuildinfo

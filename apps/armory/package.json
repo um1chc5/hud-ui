@@ -1,23 +1,26 @@
 {
   "name": "@hud-ui/armory",
-  "version": "0.1.0",
   "private": true,
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@hud-ui/core": "workspace:*",
-    "@hud-ui/skin-hud": "workspace:*",
-    "@hud-ui/skin-plain": "workspace:*",
-    "@hud-ui/tokens": "workspace:*",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "@hud-ui/ui": "workspace:*",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "@types/node": "^24.0.0"
+    "@tailwindcss/vite": "^4.1.17",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "tailwindcss": "^4.1.17",
+    "typescript": "~5.8.3",
+    "vite": "^8.3.6"
   }
 }

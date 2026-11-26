@@ -1,6 +1,6 @@
+import { HUD_PALETTES, type HudPalette } from '@hud-ui/ui'
 import { useAppearance } from './useAppearance'
 import { useHashRoute, type Route } from './useHashRoute'
-import { HUD_PALETTES, type HudPalette } from '@hud-ui/tokens'
 import { HomePage } from './pages/HomePage'
 import { DialogPage } from './pages/DialogPage'
 import { TabsPage } from './pages/TabsPage'
@@ -31,23 +31,12 @@ export function App() {
         <span className="armory-brand">hud-ui · armory</span>
         <div className="armory-toggles" role="group" aria-label="Appearance">
           <label>
-            skin
-            <select
-              value={appearance.skin}
-              onChange={(e) => update('skin', e.target.value as 'hud' | 'plain')}
-            >
-              <option value="hud">hud</option>
-              <option value="plain">plain</option>
-            </select>
-          </label>
-          <label>
             palette
             <select
               value={appearance.palette}
-              onChange={(e) => update('palette', e.target.value as typeof appearance.palette)}
-              disabled={appearance.skin !== 'hud'}
+              onChange={(e) => update('palette', e.target.value as HudPalette)}
             >
-              {HUD_PALETTES.map((p: HudPalette) => (
+              {HUD_PALETTES.map((p) => (
                 <option key={p} value={p}>
                   {p}
                 </option>
@@ -69,6 +58,16 @@ export function App() {
             <select
               value={appearance.motion}
               onChange={(e) => update('motion', e.target.value as 'on' | 'off')}
+            >
+              <option value="on">on</option>
+              <option value="off">off</option>
+            </select>
+          </label>
+          <label>
+            grid
+            <select
+              value={appearance.grid}
+              onChange={(e) => update('grid', e.target.value as 'on' | 'off')}
             >
               <option value="on">on</option>
               <option value="off">off</option>

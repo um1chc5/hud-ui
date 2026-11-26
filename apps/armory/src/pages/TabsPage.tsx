@@ -1,5 +1,4 @@
-import { Item, Tabs } from '@hud-ui/core'
-import { SplitPreview } from '../SplitPreview'
+import { Item, SegmentedControl, Tabs } from '@hud-ui/ui'
 
 export function TabsPage() {
   return (
@@ -7,14 +6,34 @@ export function TabsPage() {
       <header className="armory-page-header">
         <h1>Tabs</h1>
         <p>
-          ARIA Tabs pattern via react-aria / react-stately. Roving tabindex, arrow-key navigation
-          (horizontal or vertical), and Home / End jumps. Alias: <code>SegmentedControl</code>.
+          ARIA tabs via react-aria — roving tabindex, arrow keys, Home/End. Alias{' '}
+          <code>SegmentedControl</code> for the same component.
         </p>
       </header>
 
       <section>
         <h2 className="armory-section-title">Live</h2>
-        <SplitPreview render={() => <TabsDemo />} />
+        <div className="armory-demo">
+          <Tabs aria-label="Status" defaultSelectedKey="signal">
+            <Item key="signal" title="Signal">
+              Uplink stable. Latency 42ms.
+            </Item>
+            <Item key="power" title="Power">
+              Cap banks at 78%. Thermal nominal.
+            </Item>
+            <Item key="comms" title="Comms">
+              Encrypted channel open.
+            </Item>
+          </Tabs>
+          <SegmentedControl aria-label="View mode" defaultSelectedKey="grid">
+            <Item key="grid" title="Grid">
+              Grid layout active.
+            </Item>
+            <Item key="list" title="List">
+              List layout active.
+            </Item>
+          </SegmentedControl>
+        </div>
       </section>
 
       <section>
@@ -22,47 +41,26 @@ export function TabsPage() {
         <dl className="armory-props">
           <dt>children</dt>
           <dd>
-            One or more <code>&lt;Item key title&gt;</code> children. The <code>title</code> renders
-            in the tab; the children render in the panel.
+            <code>&lt;Item key title&gt;panel&lt;/Item&gt;</code>
           </dd>
-          <dt>defaultSelectedKey · selectedKey · onSelectionChange</dt>
+          <dt>selectedKey / defaultSelectedKey</dt>
           <dd>Controlled or uncontrolled selection.</dd>
           <dt>orientation</dt>
           <dd>
-            <code>"horizontal"</code> (default) or <code>"vertical"</code>.
+            <code>horizontal</code> (default) or <code>vertical</code>.
           </dd>
-          <dt>disabledKeys</dt>
-          <dd>Iterable of keys that cannot be selected.</dd>
         </dl>
       </section>
 
       <section>
         <h2 className="armory-section-title">Keyboard</h2>
         <dl className="armory-props">
-          <dt>ArrowLeft / ArrowRight (horizontal) or ArrowUp / ArrowDown (vertical)</dt>
-          <dd>Move between tabs; activates on focus.</dd>
+          <dt>← → / ↑ ↓</dt>
+          <dd>Move selection (respects orientation).</dd>
           <dt>Home / End</dt>
-          <dd>Jump to first / last tab.</dd>
-          <dt>Tab</dt>
-          <dd>Leaves the tablist and moves into the panel.</dd>
+          <dd>First / last tab.</dd>
         </dl>
       </section>
     </>
-  )
-}
-
-function TabsDemo() {
-  return (
-    <Tabs aria-label="Status" defaultSelectedKey="signal">
-      <Item key="signal" title="Signal">
-        Signal integrity at 94%. Carrier wave stable across 3 relay nodes.
-      </Item>
-      <Item key="power" title="Power">
-        Reactor at 72% output. Backup cells nominal.
-      </Item>
-      <Item key="comms" title="Comms">
-        Voice uplink open. Burst packet queue empty.
-      </Item>
-    </Tabs>
   )
 }

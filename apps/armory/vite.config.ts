@@ -1,28 +1,27 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const here = import.meta.dirname
-const r = (p: string) => path.resolve(here, p)
+const root = path.dirname(fileURLToPath(import.meta.url))
 
-// Point workspace packages to their sources so `pnpm dev` works without a prior build.
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   resolve: {
     alias: [
-      { find: '@hud-ui/tokens/styles.css', replacement: r('../../packages/tokens/src/tokens.css') },
       {
-        find: '@hud-ui/skin-hud/styles.css',
-        replacement: r('../../packages/skin-hud/src/styles.css'),
+        find: '@hud-ui/ui/styles/tokens.css',
+        replacement: path.resolve(root, '../../packages/ui/src/styles/tokens.css'),
       },
       {
-        find: '@hud-ui/skin-plain/styles.css',
-        replacement: r('../../packages/skin-plain/src/styles.css'),
+        find: '@hud-ui/ui/styles/hud.css',
+        replacement: path.resolve(root, '../../packages/ui/src/styles/hud.css'),
       },
-      { find: '@hud-ui/core', replacement: r('../../packages/core/src') },
-      { find: '@hud-ui/tokens', replacement: r('../../packages/tokens/src') },
-      { find: '@hud-ui/skin-hud', replacement: r('../../packages/skin-hud/src') },
-      { find: '@hud-ui/skin-plain', replacement: r('../../packages/skin-plain/src') },
+      { find: '@hud-ui/ui', replacement: path.resolve(root, '../../packages/ui/src') },
     ],
+  },
+  server: {
+    port: 5173,
   },
 })

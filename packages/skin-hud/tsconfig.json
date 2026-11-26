@@ -1,9 +1,0 @@
-{
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "paths": {
-      "@hud-ui/core": ["../core/src"]
-    }
-  },
-  "include": ["src/**/*"]
-}
