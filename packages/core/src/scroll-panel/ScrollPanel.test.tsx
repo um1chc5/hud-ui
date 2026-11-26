@@ -21,7 +21,11 @@ describe.each(SKINS)('ScrollPanel [%s]', (skin) => {
       withSkin(
         skin,
         <div style={{ height: 120 }}>
-          <ScrollPanel label="Mission log" kicker="LOG" bodyStyle={{ height: 120, overflow: 'auto' }}>
+          <ScrollPanel
+            label="Mission log"
+            kicker="LOG"
+            bodyStyle={{ height: 120, overflow: 'auto' }}
+          >
             <TallContent />
           </ScrollPanel>
         </div>,

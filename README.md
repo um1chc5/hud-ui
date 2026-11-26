@@ -54,14 +54,14 @@ picks them up.
 
 ## Components (Phase 1)
 
-| Component       | Behaviour backend       | A11y surface                       |
-| --------------- | ----------------------- | ---------------------------------- |
-| `Dialog`        | react-aria overlay      | `role="dialog"`, modal, focus trap |
-| `Tabs`          | react-aria tabs         | Roving tabindex, arrows            |
-| `Toggle`        | react-aria toggle btn   | `aria-pressed`                     |
-| `Meter`         | native ARIA             | `role="meter"`, valuemin/now/text  |
-| `TextScramble`  | custom rAF hook         | `aria-label` + reduced-motion safe |
-| `ScrollPanel`   | custom hook             | `role="region"`, keyboard scroll   |
+| Component      | Behaviour backend     | A11y surface                       |
+| -------------- | --------------------- | ---------------------------------- |
+| `Dialog`       | react-aria overlay    | `role="dialog"`, modal, focus trap |
+| `Tabs`         | react-aria tabs       | Roving tabindex, arrows            |
+| `Toggle`       | react-aria toggle btn | `aria-pressed`                     |
+| `Meter`        | native ARIA           | `role="meter"`, valuemin/now/text  |
+| `TextScramble` | custom rAF hook       | `aria-label` + reduced-motion safe |
+| `ScrollPanel`  | custom hook           | `role="region"`, keyboard scroll   |
 
 Every component has a dedicated page in the armory with a props cheatsheet
 and keyboard shortcuts, rendered in the HUD skin and the plain skin side by

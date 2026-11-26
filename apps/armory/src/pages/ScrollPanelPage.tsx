@@ -7,10 +7,9 @@ export function ScrollPanelPage() {
       <header className="armory-page-header">
         <h1>ScrollPanel</h1>
         <p>
-          A headless scrollable region. Exposes{' '}
-          <code>data-scrollable</code>, <code>data-at-top</code>,{' '}
-          <code>data-at-bottom</code>, and <code>data-scroll-pct</code> so skins can draw edge
-          fades and scrollbar chrome. Behaviour ported from the reference{' '}
+          A headless scrollable region. Exposes <code>data-scrollable</code>,{' '}
+          <code>data-at-top</code>, <code>data-at-bottom</code>, and <code>data-scroll-pct</code> so
+          skins can draw edge fades and scrollbar chrome. Behaviour ported from the reference{' '}
           <code>HudScrollPanel</code>.
         </p>
       </header>

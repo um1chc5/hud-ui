@@ -80,12 +80,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(props, f
 
   return (
     <div ref={forwardedRef} data-hud-tabs="" style={style} id={id}>
-      <div
-        {...tabListProps}
-        ref={listRef}
-        data-hud-tab-list=""
-        data-orientation={orientation}
-      >
+      <div {...tabListProps} ref={listRef} data-hud-tab-list="" data-orientation={orientation}>
         {items.map((item) => (
           <TabButton key={item.key} item={item} state={state} />
         ))}

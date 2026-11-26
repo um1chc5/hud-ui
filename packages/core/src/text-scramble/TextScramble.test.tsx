@@ -57,7 +57,9 @@ describe.each(SKINS)('TextScramble [%s]', (skin) => {
     expect(el).toHaveAttribute('data-phase', 'running')
     rerender(withSkin(skin, <TextScramble text="BRAVO" duration={80} />))
     expect(screen.getByLabelText('BRAVO')).toBeInTheDocument()
-    await waitFor(() => expect(screen.getByLabelText('BRAVO')).toHaveAttribute('data-phase', 'done'))
+    await waitFor(() =>
+      expect(screen.getByLabelText('BRAVO')).toHaveAttribute('data-phase', 'done'),
+    )
     expect(screen.getByLabelText('BRAVO')).toHaveTextContent('BRAVO')
   })
 

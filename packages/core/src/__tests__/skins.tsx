@@ -21,11 +21,7 @@ export function withSkin(skin: SkinName, children: ReactNode): ReactElement {
   )
 }
 
-export function renderInSkin(
-  skin: SkinName,
-  ui: ReactNode,
-  options?: RenderOptions,
-): RenderResult {
+export function renderInSkin(skin: SkinName, ui: ReactNode, options?: RenderOptions): RenderResult {
   return render(withSkin(skin, ui), options)
 }
 

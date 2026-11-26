@@ -9,10 +9,9 @@ export function DialogPage() {
       <header className="armory-page-header">
         <h1>Dialog</h1>
         <p>
-          Modal dialog built on react-aria overlays. Portals to{' '}
-          <code>document.body</code>, locks page scroll, traps focus, and returns focus to the
-          trigger on close. Skins target <code>[data-hud-dialog]</code> and{' '}
-          <code>[data-hud-dialog-overlay]</code>.
+          Modal dialog built on react-aria overlays. Portals to <code>document.body</code>, locks
+          page scroll, traps focus, and returns focus to the trigger on close. Skins target{' '}
+          <code>[data-hud-dialog]</code> and <code>[data-hud-dialog-overlay]</code>.
         </p>
       </header>
 
@@ -29,9 +28,13 @@ export function DialogPage() {
           <dt>title</dt>
           <dd>Rendered as the dialog heading and used for the accessible name.</dd>
           <dt>isDismissable</dt>
-          <dd>Click on scrim closes. Default <code>true</code>.</dd>
+          <dd>
+            Click on scrim closes. Default <code>true</code>.
+          </dd>
           <dt>isKeyboardDismissDisabled</dt>
-          <dd>When <code>true</code>, Esc no longer closes.</dd>
+          <dd>
+            When <code>true</code>, Esc no longer closes.
+          </dd>
         </dl>
       </section>
 
@@ -58,8 +61,8 @@ function DialogDemo({ skin }: { skin: 'hud' | 'plain' }) {
       <Dialog isOpen={open} onOpenChange={setOpen} title="Mission briefing">
         {skin === 'hud' ? <CornerBrackets /> : null}
         <p>
-          A controlled modal dialog. Focus starts on the first focusable element inside the
-          panel and returns to the opening Toggle when you press Esc or click outside.
+          A controlled modal dialog. Focus starts on the first focusable element inside the panel
+          and returns to the opening Toggle when you press Esc or click outside.
         </p>
         <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
           <Toggle isSelected={false} onChange={() => setOpen(false)}>

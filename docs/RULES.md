@@ -69,36 +69,36 @@ The HUD skin learned these the hard way — they are not negotiable:
 
 ## 5. Data-attribute catalogue
 
-| Root attribute          | Values                               | Meaning                       |
-| ----------------------- | ------------------------------------ | ----------------------------- |
-| `data-skin`             | `hud` \| `plain`                     | Which skin is active          |
-| `data-hud-palette`      | `steel` \| `teal` \| `thermal` \| `day` | Palette within the HUD skin   |
-| `data-hud-glow`         | `on` \| `off`                        | Accent/meter glow             |
-| `data-hud-grid`         | `on` \| `off`                        | Background graph grid         |
-| `data-hud-motion`       | `on` \| `off`                        | Motion opt-out                |
+| Root attribute     | Values                                  | Meaning                     |
+| ------------------ | --------------------------------------- | --------------------------- |
+| `data-skin`        | `hud` \| `plain`                        | Which skin is active        |
+| `data-hud-palette` | `steel` \| `teal` \| `thermal` \| `day` | Palette within the HUD skin |
+| `data-hud-glow`    | `on` \| `off`                           | Accent/meter glow           |
+| `data-hud-grid`    | `on` \| `off`                           | Background graph grid       |
+| `data-hud-motion`  | `on` \| `off`                           | Motion opt-out              |
 
-| Component attribute       | Component       | Meaning                                       |
-| ------------------------- | --------------- | --------------------------------------------- |
-| `data-hud-dialog`         | Dialog panel    | Marker the skin targets                       |
-| `data-hud-dialog-overlay` | Dialog scrim    | Marker the skin targets                       |
-| `data-state`              | Dialog, Toggle  | `open` / `closed` or `pressed` / `unpressed`  |
-| `data-hud-tabs`           | TabList root    | Marker the skin targets                       |
-| `data-hud-tab`            | Tab button      | Marker the skin targets                       |
-| `data-selected`           | Tab button      | `true` / `false`                              |
-| `data-orientation`        | TabList         | `horizontal` / `vertical`                     |
-| `data-hud-toggle`         | Toggle button   | Marker the skin targets                       |
-| `data-pressed`            | Toggle          | `true` / `false`                              |
-| `data-hud-meter`          | Meter root      | Marker the skin targets                       |
-| `data-variant`            | Meter           | `bar` / `ring` / `segments`                   |
-| `data-value`              | Meter           | Normalised 0–100 (rounded)                    |
-| `data-on`                 | Meter segment   | `true` / `false` per segment                  |
-| `data-hud-text-scramble`  | TextScramble    | Marker the skin targets                       |
-| `data-phase`              | TextScramble    | `idle` / `running` / `done`                   |
-| `data-hud-scroll-panel`   | ScrollPanel     | Marker the skin targets                       |
-| `data-scrollable`         | ScrollPanel     | `true` / `false`                              |
-| `data-at-top`             | ScrollPanel     | `true` / `false`                              |
-| `data-at-bottom`          | ScrollPanel     | `true` / `false`                              |
-| `data-scroll-pct`         | ScrollPanel     | `0..100` integer                              |
+| Component attribute       | Component      | Meaning                                      |
+| ------------------------- | -------------- | -------------------------------------------- |
+| `data-hud-dialog`         | Dialog panel   | Marker the skin targets                      |
+| `data-hud-dialog-overlay` | Dialog scrim   | Marker the skin targets                      |
+| `data-state`              | Dialog, Toggle | `open` / `closed` or `pressed` / `unpressed` |
+| `data-hud-tabs`           | TabList root   | Marker the skin targets                      |
+| `data-hud-tab`            | Tab button     | Marker the skin targets                      |
+| `data-selected`           | Tab button     | `true` / `false`                             |
+| `data-orientation`        | TabList        | `horizontal` / `vertical`                    |
+| `data-hud-toggle`         | Toggle button  | Marker the skin targets                      |
+| `data-pressed`            | Toggle         | `true` / `false`                             |
+| `data-hud-meter`          | Meter root     | Marker the skin targets                      |
+| `data-variant`            | Meter          | `bar` / `ring` / `segments`                  |
+| `data-value`              | Meter          | Normalised 0–100 (rounded)                   |
+| `data-on`                 | Meter segment  | `true` / `false` per segment                 |
+| `data-hud-text-scramble`  | TextScramble   | Marker the skin targets                      |
+| `data-phase`              | TextScramble   | `idle` / `running` / `done`                  |
+| `data-hud-scroll-panel`   | ScrollPanel    | Marker the skin targets                      |
+| `data-scrollable`         | ScrollPanel    | `true` / `false`                             |
+| `data-at-top`             | ScrollPanel    | `true` / `false`                             |
+| `data-at-bottom`          | ScrollPanel    | `true` / `false`                             |
+| `data-scroll-pct`         | ScrollPanel    | `0..100` integer                             |
 
 ## 6. Testing contract
 

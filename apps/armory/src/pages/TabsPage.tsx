@@ -7,9 +7,8 @@ export function TabsPage() {
       <header className="armory-page-header">
         <h1>Tabs</h1>
         <p>
-          ARIA Tabs pattern via react-aria / react-stately. Roving tabindex, arrow-key
-          navigation (horizontal or vertical), and Home / End jumps. Alias:{' '}
-          <code>SegmentedControl</code>.
+          ARIA Tabs pattern via react-aria / react-stately. Roving tabindex, arrow-key navigation
+          (horizontal or vertical), and Home / End jumps. Alias: <code>SegmentedControl</code>.
         </p>
       </header>
 
@@ -23,13 +22,15 @@ export function TabsPage() {
         <dl className="armory-props">
           <dt>children</dt>
           <dd>
-            One or more <code>&lt;Item key title&gt;</code> children. The <code>title</code> renders in
-            the tab; the children render in the panel.
+            One or more <code>&lt;Item key title&gt;</code> children. The <code>title</code> renders
+            in the tab; the children render in the panel.
           </dd>
           <dt>defaultSelectedKey · selectedKey · onSelectionChange</dt>
           <dd>Controlled or uncontrolled selection.</dd>
           <dt>orientation</dt>
-          <dd><code>"horizontal"</code> (default) or <code>"vertical"</code>.</dd>
+          <dd>
+            <code>"horizontal"</code> (default) or <code>"vertical"</code>.
+          </dd>
           <dt>disabledKeys</dt>
           <dd>Iterable of keys that cannot be selected.</dd>
         </dl>

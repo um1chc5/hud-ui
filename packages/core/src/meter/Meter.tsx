@@ -36,17 +36,7 @@ export type MeterProps = {
  *   - `[data-hud-meter-ring]` for the SVG wrapper
  */
 export const Meter = forwardRef<HTMLDivElement, MeterProps>(function Meter(
-  {
-    value,
-    min = 0,
-    max = 100,
-    label,
-    formatValue,
-    variant = 'bar',
-    segments = 10,
-    style,
-    id,
-  },
+  { value, min = 0, max = 100, label, formatValue, variant = 'bar', segments = 10, style, id },
   ref,
 ) {
   const safeMin = Number.isFinite(min) ? min : 0

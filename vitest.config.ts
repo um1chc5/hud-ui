@@ -30,7 +30,10 @@ export default defineConfig({
       { find: '@hud-ui/core', replacement: path.resolve(__dirname, 'packages/core/src') },
       { find: '@hud-ui/tokens', replacement: path.resolve(__dirname, 'packages/tokens/src') },
       { find: '@hud-ui/skin-hud', replacement: path.resolve(__dirname, 'packages/skin-hud/src') },
-      { find: '@hud-ui/skin-plain', replacement: path.resolve(__dirname, 'packages/skin-plain/src') },
+      {
+        find: '@hud-ui/skin-plain',
+        replacement: path.resolve(__dirname, 'packages/skin-plain/src'),
+      },
     ],
   },
 })

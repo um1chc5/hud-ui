@@ -8,9 +8,9 @@ export function HomePage() {
           <TextScramble text="HUD UI / ARMORY" duration={900} />
         </h1>
         <p>
-          A live playground for every component in <code>@hud-ui/core</code>. Pick a component
-          on the left. Flip the global skin / palette / glow / motion toggles in the top bar —
-          every page re-renders in both skins side by side so you can see the contract hold.
+          A live playground for every component in <code>@hud-ui/core</code>. Pick a component on
+          the left. Flip the global skin / palette / glow / motion toggles in the top bar — every
+          page re-renders in both skins side by side so you can see the contract hold.
         </p>
       </header>
 

@@ -16,9 +16,9 @@ export function MeterPage() {
       <header className="armory-page-header">
         <h1>Meter</h1>
         <p>
-          Native ARIA <code>role="meter"</code>. Three variants —{' '}
-          <code>"bar"</code>, <code>"ring"</code>, <code>"segments"</code> — all share the same
-          data contract so skins can style each form independently.
+          Native ARIA <code>role="meter"</code>. Three variants — <code>"bar"</code>,{' '}
+          <code>"ring"</code>, <code>"segments"</code> — all share the same data contract so skins
+          can style each form independently.
         </p>
       </header>
 
@@ -31,13 +31,19 @@ export function MeterPage() {
         <h2 className="armory-section-title">Props</h2>
         <dl className="armory-props">
           <dt>value · min · max</dt>
-          <dd>Numeric range. <code>value</code> is clamped into <code>[min, max]</code>.</dd>
+          <dd>
+            Numeric range. <code>value</code> is clamped into <code>[min, max]</code>.
+          </dd>
           <dt>label</dt>
           <dd>Visible label and accessible name.</dd>
           <dt>variant</dt>
-          <dd><code>"bar"</code> (default) · <code>"ring"</code> · <code>"segments"</code>.</dd>
+          <dd>
+            <code>"bar"</code> (default) · <code>"ring"</code> · <code>"segments"</code>.
+          </dd>
           <dt>segments</dt>
-          <dd>Segment count when <code>variant="segments"</code>. Default 10.</dd>
+          <dd>
+            Segment count when <code>variant="segments"</code>. Default 10.
+          </dd>
           <dt>formatValue</dt>
           <dd>
             Override the numeric readout. The returned string is also used for{' '}

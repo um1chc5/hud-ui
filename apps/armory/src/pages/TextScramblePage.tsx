@@ -13,8 +13,8 @@ export function TextScramblePage() {
       <header className="armory-page-header">
         <h1>TextScramble</h1>
         <p>
-          rAF-driven character scramble. The accessible name (<code>aria-label</code>) always
-          holds the final text, so screen readers never hear random glyphs. Reduced motion or{' '}
+          rAF-driven character scramble. The accessible name (<code>aria-label</code>) always holds
+          the final text, so screen readers never hear random glyphs. Reduced motion or{' '}
           <code>data-hud-motion="off"</code> snaps straight to the final string.
         </p>
       </header>
@@ -23,9 +23,7 @@ export function TextScramblePage() {
         <h2 className="armory-section-title">Live</h2>
         <SplitPreview render={() => <ScrambleDemo text={text} />} />
         <div style={{ marginTop: 12 }}>
-          <Toggle onChange={() => setIndex((i) => (i + 1) % SAMPLES.length)}>
-            Next phrase
-          </Toggle>
+          <Toggle onChange={() => setIndex((i) => (i + 1) % SAMPLES.length)}>Next phrase</Toggle>
         </div>
       </section>
 
@@ -35,7 +33,9 @@ export function TextScramblePage() {
           <dt>text</dt>
           <dd>Final text. Changing this value starts a new scramble toward the new target.</dd>
           <dt>duration</dt>
-          <dd>Total scramble time in ms. Default <code>800</code>.</dd>
+          <dd>
+            Total scramble time in ms. Default <code>800</code>.
+          </dd>
           <dt>glyphs</dt>
           <dd>Custom glyph pool.</dd>
           <dt>onDone</dt>

@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react'
 
 export type Route =
-  | 'home'
-  | 'dialog'
-  | 'tabs'
-  | 'toggle'
-  | 'meter'
-  | 'text-scramble'
-  | 'scroll-panel'
+  'home' | 'dialog' | 'tabs' | 'toggle' | 'meter' | 'text-scramble' | 'scroll-panel'
 
 const VALID: readonly Route[] = [
   'home',

@@ -9,8 +9,8 @@ export function TogglePage() {
         <h1>Toggle</h1>
         <p>
           ARIA toggle button via react-aria. Flips <code>aria-pressed</code> and
-          <code>data-pressed</code>. The HUD skin fills the button with the accent colour and,
-          when <code>data-hud-glow="on"</code>, adds an accent glow.
+          <code>data-pressed</code>. The HUD skin fills the button with the accent colour and, when{' '}
+          <code>data-hud-glow="on"</code>, adds an accent glow.
         </p>
       </header>
 

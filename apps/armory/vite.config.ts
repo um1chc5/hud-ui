@@ -11,7 +11,10 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: '@hud-ui/tokens/styles.css', replacement: r('../../packages/tokens/src/tokens.css') },
-      { find: '@hud-ui/skin-hud/styles.css', replacement: r('../../packages/skin-hud/src/styles.css') },
+      {
+        find: '@hud-ui/skin-hud/styles.css',
+        replacement: r('../../packages/skin-hud/src/styles.css'),
+      },
       {
         find: '@hud-ui/skin-plain/styles.css',
         replacement: r('../../packages/skin-plain/src/styles.css'),
