@@ -1,0 +1,381 @@
+/* ==========================================================================
+   @hud-ui/skin-plain
+   Neutral baseline skin. Proves the headless split works: identical
+   data-attribute selectors to skin-hud, boring look.
+   ========================================================================== */
+
+:root[data-skin='plain'],
+[data-skin='plain'] {
+  color-scheme: light;
+  --plain-bg: #ffffff;
+  --plain-fg: #111418;
+  --plain-muted: #555b63;
+  --plain-line: #d4d8dd;
+  --plain-accent: #2563eb;
+  --plain-accent-fg: #ffffff;
+  --plain-soft: #f3f4f6;
+  --plain-radius: 4px;
+  --plain-duration: 160ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-skin='plain'],
+  [data-skin='plain'] {
+    color-scheme: dark;
+    --plain-bg: #0e1013;
+    --plain-fg: #e7eaee;
+    --plain-muted: #9aa2ad;
+    --plain-line: #30363d;
+    --plain-accent: #4f8bff;
+    --plain-accent-fg: #0b0e13;
+    --plain-soft: #181b20;
+  }
+}
+
+[data-skin='plain'] body,
+body[data-skin='plain'] {
+  background-color: var(--plain-bg);
+  color: var(--plain-fg);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+[data-skin='plain'] :focus-visible {
+  outline: 2px solid var(--plain-accent);
+  outline-offset: 2px;
+  border-radius: var(--plain-radius);
+}
+
+/* ---------------------------------------------------------------- *
+ * Dialog                                                            *
+ * ---------------------------------------------------------------- */
+
+[data-skin='plain'] [data-hud-dialog-overlay] {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 100;
+  opacity: 1;
+  transition: opacity var(--plain-duration) ease;
+}
+
+[data-skin='plain'] [data-hud-dialog-overlay][data-state='closed'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+[data-skin='plain'] [data-hud-dialog] {
+  position: relative;
+  min-width: min(420px, 100%);
+  max-width: min(560px, 100%);
+  max-height: 86vh;
+  background: var(--plain-bg);
+  border: 1px solid var(--plain-line);
+  border-radius: var(--plain-radius);
+  color: var(--plain-fg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 1;
+  transition: opacity var(--plain-duration) ease;
+}
+
+[data-skin='plain'] [data-hud-dialog][data-state='closed'] {
+  opacity: 0;
+}
+
+[data-skin='plain'] [data-hud-dialog-title] {
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+}
+
+/* Decorative corner brackets never render in the plain skin. */
+[data-skin='plain'] [data-hud-corner-brackets] {
+  display: none;
+}
+
+/* ---------------------------------------------------------------- *
+ * Tabs                                                              *
+ * ---------------------------------------------------------------- */
+
+[data-skin='plain'] [data-hud-tabs] {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+[data-skin='plain'] [data-hud-tab-list] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border-bottom: 1px solid var(--plain-line);
+  padding-bottom: 0;
+}
+
+[data-skin='plain'] [data-hud-tab-list][data-orientation='vertical'] {
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 0;
+  border-right: 1px solid var(--plain-line);
+}
+
+[data-skin='plain'] [data-hud-tab] {
+  appearance: none;
+  background: transparent;
+  color: var(--plain-muted);
+  font: inherit;
+  padding: 8px 12px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  border-radius: var(--plain-radius) var(--plain-radius) 0 0;
+  transition:
+    color var(--plain-duration) ease,
+    border-color var(--plain-duration) ease,
+    background-color var(--plain-duration) ease;
+}
+
+[data-skin='plain'] [data-hud-tab]:hover {
+  color: var(--plain-fg);
+  background: var(--plain-soft);
+}
+
+[data-skin='plain'] [data-hud-tab][data-selected='true'] {
+  color: var(--plain-fg);
+  border-bottom-color: var(--plain-accent);
+}
+
+[data-skin='plain'] [data-hud-tab]:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+[data-skin='plain'] [data-hud-tab-panel] {
+  padding: 8px 0;
+}
+
+/* ---------------------------------------------------------------- *
+ * Toggle                                                            *
+ * ---------------------------------------------------------------- */
+
+[data-skin='plain'] [data-hud-toggle] {
+  appearance: none;
+  background: var(--plain-bg);
+  color: var(--plain-fg);
+  font: inherit;
+  padding: 6px 12px;
+  border: 1px solid var(--plain-line);
+  border-radius: var(--plain-radius);
+  cursor: pointer;
+  transition:
+    background-color var(--plain-duration) ease,
+    color var(--plain-duration) ease,
+    border-color var(--plain-duration) ease;
+}
+
+[data-skin='plain'] [data-hud-toggle]:hover {
+  background: var(--plain-soft);
+}
+
+[data-skin='plain'] [data-hud-toggle][data-pressed='true'] {
+  background: var(--plain-accent);
+  border-color: var(--plain-accent);
+  color: var(--plain-accent-fg);
+}
+
+/* ---------------------------------------------------------------- *
+ * Meter                                                             *
+ * ---------------------------------------------------------------- */
+
+[data-skin='plain'] [data-hud-meter] {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  align-items: center;
+  font-size: 13px;
+  color: var(--plain-muted);
+}
+
+[data-skin='plain'] [data-hud-meter-label] {
+  grid-column: 1;
+}
+
+[data-skin='plain'] [data-hud-meter-value] {
+  grid-column: 2;
+  color: var(--plain-fg);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-skin='plain'] [data-hud-meter-track] {
+  grid-column: 1 / -1;
+  position: relative;
+  height: 6px;
+  background: var(--plain-soft);
+  border: 1px solid var(--plain-line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+[data-skin='plain'] [data-hud-meter-fill] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--hud-meter-pct, 0%);
+  background: var(--plain-accent);
+  transition: width var(--plain-duration) ease;
+}
+
+[data-skin='plain'] [data-hud-meter][data-variant='segments'] [data-hud-meter-track] {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 3px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  height: 10px;
+}
+
+[data-skin='plain'] [data-hud-meter-segment] {
+  background: var(--plain-soft);
+  border: 1px solid var(--plain-line);
+  border-radius: 2px;
+}
+
+[data-skin='plain'] [data-hud-meter-segment][data-on='true'] {
+  background: var(--plain-accent);
+  border-color: var(--plain-accent);
+}
+
+[data-skin='plain'] [data-hud-meter][data-variant='ring'] {
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  align-items: center;
+}
+
+[data-skin='plain'] [data-hud-meter][data-variant='ring'] [data-hud-meter-track] {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  background: transparent;
+}
+
+[data-skin='plain'] [data-hud-meter][data-variant='ring'] [data-hud-meter-label] {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+[data-skin='plain'] [data-hud-meter][data-variant='ring'] [data-hud-meter-value] {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: start;
+}
+
+[data-skin='plain'] [data-hud-meter-ring] {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+[data-skin='plain'] [data-hud-meter-ring] circle[data-role='track'] {
+  stroke: var(--plain-line);
+}
+
+[data-skin='plain'] [data-hud-meter-ring] circle[data-role='fill'] {
+  stroke: var(--plain-accent);
+  transition: stroke-dashoffset var(--plain-duration) ease;
+}
+
+/* ---------------------------------------------------------------- *
+ * TextScramble                                                      *
+ * ---------------------------------------------------------------- */
+
+[data-skin='plain'] [data-hud-text-scramble] {
+  font-family: ui-monospace, Menlo, monospace;
+  color: var(--plain-fg);
+  font-variant-numeric: tabular-nums;
+  white-space: pre;
+}
+
+/* ---------------------------------------------------------------- *
+ * ScrollPanel                                                       *
+ * ---------------------------------------------------------------- */
+
+[data-skin='plain'] [data-hud-scroll-panel] {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border: 1px solid var(--plain-line);
+  border-radius: var(--plain-radius);
+  background: var(--plain-bg);
+}
+
+[data-skin='plain'] [data-hud-scroll-panel-bar] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--plain-line);
+  min-height: 28px;
+  flex: none;
+}
+
+[data-skin='plain'] [data-hud-scroll-panel-kicker] {
+  font-size: 12px;
+  color: var(--plain-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+[data-skin='plain'] [data-hud-scroll-panel-readout] {
+  font-size: 12px;
+  color: var(--plain-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-skin='plain'] [data-hud-scroll-panel-body] {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12px 14px;
+  outline: none;
+}
+
+[data-skin='plain'] [data-hud-scroll-panel-body]:focus-visible {
+  outline: 2px solid var(--plain-accent);
+  outline-offset: -2px;
+}
+
+/* ---------------------------------------------------------------- *
+ * Reduced motion                                                    *
+ * ---------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-skin='plain'] [data-hud-dialog],
+  [data-skin='plain'] [data-hud-dialog-overlay],
+  [data-skin='plain'] [data-hud-tab],
+  [data-skin='plain'] [data-hud-toggle],
+  [data-skin='plain'] [data-hud-meter-fill] {
+    transition: none !important;
+  }
+}
+
+[data-skin='plain'][data-hud-motion='off'] [data-hud-dialog],
+[data-skin='plain'][data-hud-motion='off'] [data-hud-dialog-overlay],
+[data-skin='plain'][data-hud-motion='off'] [data-hud-tab],
+[data-skin='plain'][data-hud-motion='off'] [data-hud-toggle],
+[data-skin='plain'][data-hud-motion='off'] [data-hud-meter-fill] {
+  transition: none !important;
+}
