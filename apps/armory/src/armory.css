@@ -1,0 +1,251 @@
+/* Armory chrome. Deliberately minimal — the point is the components, not
+   the shell. The shell uses the active global skin's tokens where possible. */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.armory {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 100vh;
+  gap: 0;
+}
+
+.armory-topbar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--line, #26394b);
+  background: color-mix(in srgb, var(--sheet-solid, #0e161e) 94%, transparent);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(6px);
+}
+
+[data-skin='plain'] .armory-topbar {
+  background: var(--plain-bg, #ffffff);
+  border-color: var(--plain-line, #d4d8dd);
+}
+
+.armory-brand {
+  font-family: var(--hud-font-display, system-ui);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.armory-toggles {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-family: var(--hud-font-mono, ui-monospace);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.armory-toggles label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted, #8499ab);
+}
+
+[data-skin='plain'] .armory-toggles label {
+  color: var(--plain-muted, #555b63);
+}
+
+.armory-toggles select {
+  background: transparent;
+  color: inherit;
+  border: 1px solid var(--line, #26394b);
+  padding: 4px 6px;
+  font: inherit;
+}
+
+[data-skin='plain'] .armory-toggles select {
+  border-color: var(--plain-line, #d4d8dd);
+  color: var(--plain-fg, #111);
+}
+
+.armory-nav {
+  padding: 16px;
+  border-right: 1px solid var(--line, #26394b);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 100%;
+}
+
+[data-skin='plain'] .armory-nav {
+  border-color: var(--plain-line, #d4d8dd);
+}
+
+.armory-nav h3 {
+  font-family: var(--hud-font-mono, ui-monospace);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  color: var(--muted, #8499ab);
+  text-transform: uppercase;
+  margin: 0 0 4px;
+}
+
+.armory-nav a {
+  display: block;
+  padding: 7px 10px;
+  color: var(--ink, #c3d0da);
+  font-family: var(--hud-font-mono, ui-monospace);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.armory-nav a:hover {
+  border-color: var(--accent-d, #4d738f);
+}
+
+.armory-nav a[aria-current='page'] {
+  color: var(--on-accent, #060b10);
+  background: var(--accent, #7fa7c4);
+  border-color: var(--accent, #7fa7c4);
+}
+
+[data-skin='plain'] .armory-nav a[aria-current='page'] {
+  color: var(--plain-accent-fg, #ffffff);
+  background: var(--plain-accent, #2563eb);
+  border-color: var(--plain-accent, #2563eb);
+}
+
+.armory-main {
+  padding: 24px;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: auto;
+}
+
+.armory-page-header h1 {
+  margin: 0 0 4px;
+  font-family: var(--hud-font-display, system-ui);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 22px;
+}
+
+.armory-page-header p {
+  margin: 0;
+  color: var(--muted, #8499ab);
+  max-width: 68ch;
+  line-height: 1.5;
+}
+
+[data-skin='plain'] .armory-page-header p {
+  color: var(--plain-muted, #555b63);
+}
+
+.armory-section-title {
+  font-family: var(--hud-font-mono, ui-monospace);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted, #8499ab);
+  margin: 8px 0 4px;
+}
+
+.armory-props {
+  border: 1px solid var(--line, #26394b);
+  padding: 12px 14px;
+  font-family: var(--hud-font-mono, ui-monospace);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+[data-skin='plain'] .armory-props {
+  border-color: var(--plain-line, #d4d8dd);
+}
+
+.armory-props dt {
+  color: var(--accent, #7fa7c4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 11px;
+  margin-top: 6px;
+}
+
+.armory-props dt:first-child {
+  margin-top: 0;
+}
+
+.armory-props dd {
+  margin: 0 0 4px;
+  color: var(--ink, #c3d0da);
+}
+
+[data-skin='plain'] .armory-props dd {
+  color: var(--plain-fg, #111);
+}
+
+.armory-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 960px) {
+  .armory-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.armory-split-side {
+  border: 1px solid var(--line, #26394b);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 220px;
+}
+
+.armory-split-side[data-skin='hud'] {
+  background: var(--paper, #06090d);
+  color: var(--ink, #c3d0da);
+  border-color: var(--line, #26394b);
+}
+
+.armory-split-side[data-skin='plain'] {
+  background: var(--plain-bg, #ffffff);
+  color: var(--plain-fg, #111);
+  border-color: var(--plain-line, #d4d8dd);
+}
+
+.armory-split-label {
+  font-family: var(--hud-font-mono, ui-monospace);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted, #8499ab);
+}
+
+.armory-split-side[data-skin='plain'] .armory-split-label {
+  color: var(--plain-muted, #555b63);
+}

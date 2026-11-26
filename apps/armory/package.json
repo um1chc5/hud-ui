@@ -1,0 +1,23 @@
+{
+  "name": "@hud-ui/armory",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@hud-ui/core": "workspace:*",
+    "@hud-ui/skin-hud": "workspace:*",
+    "@hud-ui/skin-plain": "workspace:*",
+    "@hud-ui/tokens": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["vite/client", "node"],
+    "paths": {
+      "@hud-ui/core": ["../../packages/core/src"],
+      "@hud-ui/tokens": ["../../packages/tokens/src"],
+      "@hud-ui/skin-hud": ["../../packages/skin-hud/src"],
+      "@hud-ui/skin-plain": ["../../packages/skin-plain/src"]
+    }
+  },
+  "include": ["src/**/*", "vite.config.ts"]
+}
