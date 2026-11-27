@@ -72,7 +72,7 @@ const CONTRAST_BY_PALETTE: Record<HudPalette, ContrastRow[]> = {
     {
       pair: '--accent-d on --sheet-solid (interactive border)',
       ratio: '4.51:1',
-      level: 'AA' as 'AA',
+      level: 'AA',
     },
   ],
   day: [
