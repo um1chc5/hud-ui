@@ -15,6 +15,8 @@ import {
 import { Link, ROUTE_TO_PATH, type Route } from '../useRoute'
 import type { Appearance } from '../useAppearance'
 import { InstallBar } from '../components/InstallBar'
+import { CopyButton } from '../components/CopyButton'
+import { getAgentInitPrompt } from '../lib/registry'
 
 type LandingPageProps = {
   appearance: Appearance
@@ -183,6 +185,12 @@ export function LandingPage({ appearance, onUpdateAppearance }: LandingPageProps
               </button>
             </div>
             <InstallBar slug="hud-theme" />
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border border-[var(--line)] bg-[var(--soft)] px-3.5 py-2.5">
+              <span className="font-[family-name:var(--hud-font-mono)] text-xs text-[var(--muted)]">
+                Using an AI agent? Copy the one-shot project init prompt
+              </span>
+              <CopyButton value={getAgentInitPrompt()} label="COPY AGENT PROMPT" />
+            </div>
           </div>
 
           <ChamferFrame size="lg" className="relative p-5 bg-[var(--soft)]">

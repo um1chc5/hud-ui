@@ -1,6 +1,11 @@
 import { CodeBlock } from '../components/CodeBlock'
 import { InstallBar } from '../components/InstallBar'
-import { getComponentsJsonSnippet, getHudConfigSnippet, getRegistryRootUrl } from '../lib/registry'
+import {
+  getAgentInitPrompt,
+  getComponentsJsonSnippet,
+  getHudConfigSnippet,
+  getRegistryRootUrl,
+} from '../lib/registry'
 import { Link } from '../useRoute'
 
 const INIT_CMD = `pnpm dlx @hud-ui/cli init`
@@ -45,6 +50,15 @@ export function DocsGettingStartedPage() {
           files straight from the docs.
         </p>
       </header>
+
+      <section>
+        <h2 className="armory-section-title">Quick Agent Prompt (Copy &amp; Paste)</h2>
+        <p className="text-sm text-[var(--muted)] mb-3">
+          Paste this into your coding agent (Antigravity, Claude Code, Cursor) to wire{' '}
+          <code>hud-ui</code> into an existing React + Tailwind v4 codebase automatically:
+        </p>
+        <CodeBlock code={getAgentInitPrompt()} title="AGENT_INIT_PROMPT.txt" lang="text" />
+      </section>
 
       <section>
         <h2 className="armory-section-title">1. Prerequisites</h2>

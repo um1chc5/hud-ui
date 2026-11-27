@@ -28,6 +28,17 @@ pnpm dlx @hud-ui/cli init
 pnpm dlx @hud-ui/cli add dialog meter text-scramble
 ```
 
+### Quick Agent Prompt (initialize into an existing project)
+
+```text
+Initialize hud-ui in this React + Tailwind v4 project using the registry at https://um1chc5.github.io/hud-ui/r:
+
+1. Inspect package.json, tsconfig.json, and CSS entry files to detect our package manager and src/ alias paths.
+2. Fetch https://um1chc5.github.io/hud-ui/r/registry.json and install hud-theme, utils, and the requested components (e.g. dialog, tabs, toggle, meter, text-scramble, scroll-panel).
+3. Import hud-tokens.css and hud.css once at the app root (after Tailwind), and set data-hud-palette="steel" data-hud-glow="on" data-hud-motion="on" data-hud-grid="on" on <html>.
+4. Follow the motion rules (opacity, clip-path, translate only — never transform/scale on body text), and verify typecheck, lint, and build pass.
+```
+
 Or copy files manually:
 
 1. Ensure the app has Tailwind v4, React 19, and (for Dialog/Tabs/Toggle)

@@ -69,3 +69,18 @@ export function getComponentsJsonSnippet(): string {
     2,
   )
 }
+
+export function getAgentInitPrompt(
+  components: string[] = ['dialog', 'tabs', 'toggle', 'meter', 'text-scramble', 'scroll-panel'],
+): string {
+  const registryRoot = getRegistryRootUrl()
+  const list = components.join(' ')
+  return `Initialize hud-ui in this React + Tailwind v4 project using the registry at ${registryRoot}:
+
+1. Inspect package.json, tsconfig.json, and CSS entry files to detect our package manager and src/ alias paths.
+2. Fetch ${registryRoot}/registry.json and install hud-theme, utils, and these components: ${list}
+   - Either run: npx @hud-ui/cli init --registry ${registryRoot} && npx @hud-ui/cli add ${list} --registry ${registryRoot}
+   - Or fetch each ${registryRoot}/<name>.json directly, resolve its registryDependencies, write its files (mapping @/ to our tsconfig path alias), and install any listed npm dependencies (e.g. @base-ui/react, clsx, tailwind-merge).
+3. Import hud-tokens.css and hud.css once at the app root (after Tailwind), and set data-hud-palette="steel" data-hud-glow="on" data-hud-motion="on" data-hud-grid="on" on <html>.
+4. Keep motion strict (opacity, clip-path, translate only — never transform/scale on body text), and verify typecheck, lint, and build pass.`
+}
