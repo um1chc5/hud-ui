@@ -1,20 +1,5 @@
-import {
-  forwardRef,
-  useId,
-  useRef,
-  type CSSProperties,
-  type ReactNode,
-  type Ref,
-} from 'react'
-import {
-  FocusScope,
-  Overlay,
-  mergeProps,
-  useDialog,
-  useModalOverlay,
-  usePreventScroll,
-} from 'react-aria'
-import { useOverlayTriggerState } from 'react-stately'
+import { forwardRef, type CSSProperties, type ReactNode } from 'react'
+import { Dialog as BaseDialog } from '@base-ui/react/dialog'
 import { cn } from '../../lib/utils'
 import { CornerBrackets } from '../hud/CornerBrackets'
 
@@ -32,90 +17,69 @@ export type DialogProps = {
 }
 
 /**
- * Modal Dialog — focus trap, Esc, return focus, chamfered HUD panel.
+ * Modal Dialog — powered by Base UI Dialog with focus trap, Esc, scroll lock,
+ * return focus, and chamfered HUD panel.
  * Boot-open uses opacity / translate / clip-path (never transform).
  */
-export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(props, forwardedRef) {
-  const { isOpen, onOpenChange } = props
-  const state = useOverlayTriggerState({ isOpen, onOpenChange })
-  if (!state.isOpen) return null
-  return <DialogImpl {...props} state={state} forwardedRef={forwardedRef} />
-})
-
-type DialogImplProps = DialogProps & {
-  state: ReturnType<typeof useOverlayTriggerState>
-  forwardedRef: Ref<HTMLDivElement>
-}
-
-function DialogImpl({
-  state,
-  title,
-  children,
-  isDismissable = true,
-  isKeyboardDismissDisabled = false,
-  className,
-  overlayClassName,
-  style,
-  id,
+export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
+  {
+    isOpen,
+    onOpenChange,
+    title,
+    children,
+    isDismissable = true,
+    isKeyboardDismissDisabled = false,
+    className,
+    overlayClassName,
+    style,
+    id,
+  },
   forwardedRef,
-}: DialogImplProps) {
-  const ref = useRef<HTMLDivElement>(null)
-  const { modalProps, underlayProps } = useModalOverlay(
-    { isDismissable, isKeyboardDismissDisabled },
-    state,
-    ref,
-  )
-  const { dialogProps, titleProps } = useDialog({}, ref)
-  usePreventScroll()
-
-  const titleId = useId()
-
-  const setRefs = (node: HTMLDivElement | null) => {
-    ref.current = node
-    if (typeof forwardedRef === 'function') forwardedRef(node)
-    else if (forwardedRef) forwardedRef.current = node
-  }
-
+) {
   return (
-    <Overlay>
-      <div
-        {...underlayProps}
-        data-hud-dialog-overlay=""
-        data-state={state.isOpen ? 'open' : 'closed'}
-        className={cn(
-          'fixed inset-0 z-[100] grid place-items-center bg-[var(--scrim)] p-4',
-          overlayClassName,
-        )}
-      >
-        <FocusScope contain restoreFocus autoFocus>
-          <div
-            {...mergeProps(modalProps, dialogProps)}
-            ref={setRefs}
+    <BaseDialog.Root
+      open={isOpen}
+      modal={true}
+      disablePointerDismissal={!isDismissable}
+      onOpenChange={(nextOpen, details) => {
+        if (!nextOpen && isKeyboardDismissDisabled && details.reason === 'escape-key') {
+          details.cancel()
+          return
+        }
+        onOpenChange(nextOpen)
+      }}
+    >
+      <BaseDialog.Portal>
+        <BaseDialog.Backdrop
+          data-hud-dialog-overlay=""
+          data-state={isOpen ? 'open' : 'closed'}
+          className={cn('fixed inset-0 z-[100] bg-[var(--scrim)]', overlayClassName)}
+        />
+        <BaseDialog.Viewport className="fixed inset-0 z-[100] grid place-items-center p-4">
+          <BaseDialog.Popup
+            ref={forwardedRef}
             id={id}
-            aria-labelledby={titleId}
             data-hud-dialog=""
-            data-state={state.isOpen ? 'open' : 'closed'}
+            data-state={isOpen ? 'open' : 'closed'}
             className={cn(
               'relative flex max-h-[86vh] min-w-[min(480px,100%)] max-w-[min(640px,100%)]',
               'flex-col gap-3 border border-[var(--line)] bg-[var(--sheet-solid)]',
-              'p-5 pb-4 font-[family-name:var(--hud-font-body)] text-[var(--ink)]',
+              'p-5 pb-4 font-[family-name:var(--hud-font-body)] text-[var(--ink)] outline-none',
               className,
             )}
             style={style}
           >
             <CornerBrackets />
-            <h2
-              {...titleProps}
-              id={titleId}
+            <BaseDialog.Title
               data-hud-dialog-title=""
               className="m-0 font-[family-name:var(--hud-font-display)] text-lg font-semibold uppercase tracking-[0.08em] text-[var(--ink)]"
             >
               {title}
-            </h2>
+            </BaseDialog.Title>
             {children}
-          </div>
-        </FocusScope>
-      </div>
-    </Overlay>
+          </BaseDialog.Popup>
+        </BaseDialog.Viewport>
+      </BaseDialog.Portal>
+    </BaseDialog.Root>
   )
-}
+})

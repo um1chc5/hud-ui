@@ -107,8 +107,8 @@
       "name": "dialog",
       "type": "registry:ui",
       "title": "Dialog",
-      "description": "Modal dialog built on react-aria overlays with focus trap, Esc dismissal, corner brackets, and chamfered panel motion.",
-      "dependencies": ["react-aria", "react-stately"],
+      "description": "Modal dialog built on Base UI with focus trap, Esc dismissal, corner brackets, and chamfered panel motion.",
+      "dependencies": ["@base-ui/react"],
       "registryDependencies": ["utils", "corner-brackets", "hud-theme"],
       "files": [
         {
@@ -122,8 +122,8 @@
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
-      "description": "Accessible ARIA tabs and SegmentedControl alias via react-aria with roving tabindex and chamfered active state.",
-      "dependencies": ["react-aria", "react-stately"],
+      "description": "Accessible ARIA tabs and SegmentedControl alias via Base UI with roving tabindex and chamfered active state.",
+      "dependencies": ["@base-ui/react"],
       "registryDependencies": ["utils", "hud-theme"],
       "files": [
         {
@@ -137,8 +137,8 @@
       "name": "toggle",
       "type": "registry:ui",
       "title": "Toggle",
-      "description": "ARIA toggle button via react-aria with chamfered chip styling and accent pressed state.",
-      "dependencies": ["react-aria", "react-stately"],
+      "description": "ARIA toggle button via Base UI with chamfered chip styling and accent pressed state.",
+      "dependencies": ["@base-ui/react"],
       "registryDependencies": ["utils", "hud-theme"],
       "files": [
         {

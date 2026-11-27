@@ -1,7 +1,9 @@
 import { CodeBlock } from '../components/CodeBlock'
 import { InstallBar } from '../components/InstallBar'
-import { getComponentsJsonSnippet, getRegistryBaseUrl } from '../lib/registry'
+import { getComponentsJsonSnippet, getHudConfigSnippet, getRegistryRootUrl } from '../lib/registry'
 import { Link } from '../useRoute'
+
+const INIT_CMD = `pnpm dlx @hud-ui/cli init`
 
 const ROOT_IMPORTS = `import './styles/hud-tokens.css'
 import './styles/hud.css'`
@@ -28,7 +30,7 @@ export function TelemetryCard() {
 }`
 
 export function DocsGettingStartedPage() {
-  const baseUrl = getRegistryBaseUrl()
+  const registryRoot = getRegistryRootUrl()
 
   return (
     <article className="armory-guide">
@@ -39,7 +41,8 @@ export function DocsGettingStartedPage() {
         <h1>Getting Started</h1>
         <p>
           Install <code>hud-ui</code> components directly into your React 19 + Tailwind v4 app using
-          the official <code>shadcn</code> CLI, or copy files directly from the docs.
+          our own <code>@hud-ui/cli</code> (or the compatible <code>shadcn</code> CLI), or copy
+          files straight from the docs.
         </p>
       </header>
 
@@ -55,34 +58,33 @@ export function DocsGettingStartedPage() {
             <dd>Tailwind v4 (`@import &quot;tailwindcss&quot;;`) configured in your app.</dd>
           </div>
           <div className="armory-prop-row">
-            <dt>shadcn CLI</dt>
-            <dd>Any project initialized with `shadcn@latest init` (`components.json`).</dd>
+            <dt>Node.js</dt>
+            <dd>Node 20+ for `@hud-ui/cli`.</dd>
           </div>
         </dl>
       </section>
 
       <section>
-        <h2 className="armory-section-title">2. Configure the @hud Registry Namespace</h2>
+        <h2 className="armory-section-title">2. Initialize with @hud-ui/cli</h2>
         <p className="text-sm text-[var(--muted)] mb-3">
-          Add the <code>@hud</code> namespace to your app&apos;s <code>components.json</code> so you
-          can install any item cleanly with <code>@hud/&lt;name&gt;</code>:
+          Run <code>init</code> to create <code>hud.config.json</code> and install the base tokens,
+          chrome CSS, and <code>cn()</code> utility from <code>{registryRoot}</code>:
         </p>
-        <CodeBlock code={getComponentsJsonSnippet()} title="components.json" lang="json" />
-        <p className="text-xs text-[var(--muted)] mt-3">
-          Prefer zero configuration? Switch any install bar to <code>direct URL</code> mode to pass{' '}
-          <code>{baseUrl}/r/&lt;name&gt;.json</code> directly to <code>shadcn add</code>.
-        </p>
+        <div className="flex flex-col gap-3">
+          <CodeBlock code={INIT_CMD} title="Terminal" lang="bash" />
+          <CodeBlock code={getHudConfigSnippet()} title="hud.config.json" lang="json" />
+        </div>
       </section>
 
       <section>
-        <h2 className="armory-section-title">3. Install Theme Tokens &amp; Components</h2>
+        <h2 className="armory-section-title">3. Add Components</h2>
         <p className="text-sm text-[var(--muted)] mb-3">
-          Install the base theme once (components also declare <code>hud-theme</code> as a registry
-          dependency automatically):
+          Add any component by name — dependencies like <code>@base-ui/react</code>,{' '}
+          <code>CornerBrackets</code>, and <code>hud-theme</code> resolve automatically:
         </p>
         <div className="flex flex-col gap-3">
-          <InstallBar slug="hud-theme" />
           <InstallBar slug="dialog" />
+          <InstallBar slug="meter" />
         </div>
       </section>
 
@@ -97,6 +99,16 @@ export function DocsGettingStartedPage() {
           <CodeBlock code={HTML_ATTRS} title="index.html" lang="html" />
           <CodeBlock code={USAGE_SNIPPET} title="TelemetryCard.tsx" lang="tsx" />
         </div>
+      </section>
+
+      <section>
+        <h2 className="armory-section-title">Optional: Using the shadcn CLI instead</h2>
+        <p className="text-sm text-[var(--muted)] mb-3">
+          Our registry endpoint also matches the official <code>shadcn</code> registry schema. If
+          your project already uses <code>components.json</code>, add the <code>@hud</code>{' '}
+          namespace:
+        </p>
+        <CodeBlock code={getComponentsJsonSnippet()} title="components.json" lang="json" />
       </section>
 
       <section>

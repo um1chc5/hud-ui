@@ -1,12 +1,13 @@
 # hud-ui
 
-Private high-tech **HUD** UI kit — ownable source, shadcn-style. One visual
-system (chamfered panels, corner brackets, mono labels, glow, grid, text
-scramble). Not a multi-package headless library.
+High-tech **HUD** UI kit — ownable source with its own CLI (`@hud-ui/cli`) and
+Base UI (`@base-ui/react`) headless primitives. One visual system (chamfered
+panels, corner brackets, mono labels, glow, grid, text scramble).
 
 ```
 packages/ui/          tokens + components (copy into your app)
-apps/armory/          Vite playground
+packages/cli/         @hud-ui/cli (init / add / list)
+apps/armory/          Product site, docs, playground & /r/*.json registry
 ```
 
 ## Quick start
@@ -20,10 +21,17 @@ pnpm typecheck
 pnpm lint
 ```
 
-## Copy a component into another app
+## Install into an app (`@hud-ui/cli`)
+
+```bash
+pnpm dlx @hud-ui/cli init
+pnpm dlx @hud-ui/cli add dialog meter text-scramble
+```
+
+Or copy files manually:
 
 1. Ensure the app has Tailwind v4, React 19, and (for Dialog/Tabs/Toggle)
-   `react-aria` + `react-stately`.
+   `@base-ui/react`.
 2. Copy `packages/ui/src/styles/tokens.css` and `hud.css`, then import them
    once at the app root.
 3. Copy `lib/utils.ts` (`cn`) and any hooks the component needs.
@@ -32,12 +40,7 @@ pnpm lint
 5. Set appearance attrs on `<html>`:
 
 ```html
-<html
-  data-hud-palette="steel"
-  data-hud-glow="on"
-  data-hud-motion="on"
-  data-hud-grid="on"
-></html>
+<html data-hud-palette="steel" data-hud-glow="on" data-hud-motion="on" data-hud-grid="on"></html>
 ```
 
 Palettes: `steel` · `teal` · `thermal` · `day`.
@@ -67,14 +70,14 @@ import { Dialog, Tabs, Toggle, Meter, TextScramble, ScrollPanel } from '@hud-ui/
 
 ## Components (Phase 1)
 
-| Component      | Behaviour              | A11y                                      |
-| -------------- | ---------------------- | ----------------------------------------- |
-| `Dialog`       | react-aria overlay     | modal, focus trap, Esc, return focus      |
-| `Tabs`         | react-aria tabs        | roving tabindex, arrows                   |
-| `Toggle`       | react-aria toggle btn  | `aria-pressed`                            |
-| `Meter`        | native ARIA            | `role="meter"`                            |
-| `TextScramble` | custom rAF             | final `aria-label`; reduced-motion safe   |
-| `ScrollPanel`  | custom                 | `role="region"`, keyboard scroll          |
+| Component      | Behaviour      | A11y                                    |
+| -------------- | -------------- | --------------------------------------- |
+| `Dialog`       | Base UI Dialog | modal, focus trap, Esc, return focus    |
+| `Tabs`         | Base UI Tabs   | roving tabindex, arrows                 |
+| `Toggle`       | Base UI Toggle | `aria-pressed`                          |
+| `Meter`        | native ARIA    | `role="meter"`                          |
+| `TextScramble` | custom rAF     | final `aria-label`; reduced-motion safe |
+| `ScrollPanel`  | custom         | `role="region"`, keyboard scroll        |
 
 Decorative: `CornerBrackets`, `ChamferFrame`, `GridBg`.
 

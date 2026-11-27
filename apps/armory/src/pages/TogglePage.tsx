@@ -22,8 +22,8 @@ export function TogglePage() {
       title="Toggle"
       slug="toggle"
       category="UI Primitive"
-      description="ARIA toggle button (aria-pressed) powered by react-aria. Chamfered HUD chip with solid accent fill and optional glow when pressed."
-      dependencies={['react-aria', 'react-stately']}
+      description="ARIA toggle button (aria-pressed) powered by Base UI Toggle. Chamfered HUD chip with solid accent fill and optional glow when pressed."
+      dependencies={['@base-ui/react']}
       demo={<ToggleDemo />}
       usageCode={USAGE_CODE}
       sources={[{ filename: 'components/ui/Toggle.tsx', code: toggleSource }]}

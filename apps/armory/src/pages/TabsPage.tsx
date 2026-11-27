@@ -23,8 +23,8 @@ export function TabsPage() {
       title="Tabs"
       slug="tabs"
       category="UI Primitive"
-      description="ARIA tabs via react-aria with roving tabindex, arrow-key navigation, and Home/End support. Also exports SegmentedControl and Tab aliases."
-      dependencies={['react-aria', 'react-stately']}
+      description="ARIA tabs built on Base UI Tabs with roving tabindex, arrow-key navigation, and Home/End support. Also exports SegmentedControl and Tab aliases."
+      dependencies={['@base-ui/react']}
       demo={
         <div className="flex flex-col gap-6">
           <Tabs aria-label="Status" defaultSelectedKey="signal">

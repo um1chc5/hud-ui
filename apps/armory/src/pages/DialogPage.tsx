@@ -28,8 +28,8 @@ export function DialogPage() {
       title="Dialog"
       slug="dialog"
       category="UI Primitive"
-      description="Modal dialog on react-aria overlays. Portals to document.body, locks scroll, traps focus, and returns focus on close. Chamfered panel + corner brackets + boot-style open."
-      dependencies={['react-aria', 'react-stately']}
+      description="Modal dialog built on Base UI Dialog. Portals to document.body, locks scroll, traps focus, and returns focus on close. Chamfered panel + corner brackets + boot-style open."
+      dependencies={['@base-ui/react']}
       demo={<DialogDemo />}
       usageCode={USAGE_CODE}
       sources={[{ filename: 'components/ui/Dialog.tsx', code: dialogSource }]}

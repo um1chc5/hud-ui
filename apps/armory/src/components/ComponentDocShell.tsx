@@ -66,7 +66,7 @@ export function ComponentDocShell({
 
       <section aria-labelledby="install-heading">
         <h2 id="install-heading" className="armory-section-title">
-          Install via shadcn registry
+          Install
         </h2>
         <InstallBar slug={slug} />
       </section>

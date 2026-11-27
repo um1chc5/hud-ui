@@ -1,6 +1,5 @@
-import { forwardRef, useRef, type CSSProperties, type ReactNode } from 'react'
-import { mergeProps, useFocusRing, useToggleButton } from 'react-aria'
-import { useToggleState } from 'react-stately'
+import { forwardRef, type CSSProperties, type ReactNode } from 'react'
+import { Toggle as BaseToggle } from '@base-ui/react/toggle'
 import { cn } from '../../lib/utils'
 
 export type ToggleProps = {
@@ -17,41 +16,57 @@ export type ToggleProps = {
   type?: 'button' | 'submit' | 'reset'
 }
 
-export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(function Toggle(props, ref) {
-  const { children, style, id, className } = props
-  const state = useToggleState(props)
-  const internalRef = useRef<HTMLButtonElement>(null)
-  const { buttonProps, isPressed } = useToggleButton(props, state, internalRef)
-  const { isFocusVisible, focusProps } = useFocusRing()
-
-  const setRefs = (node: HTMLButtonElement | null) => {
-    internalRef.current = node
-    if (typeof ref === 'function') ref(node)
-    else if (ref) ref.current = node
-  }
-
+/**
+ * Accessible Toggle button — powered by Base UI Toggle (`aria-pressed`).
+ * Space / Enter flip state with chamfered HUD styling.
+ */
+export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(function Toggle(
+  {
+    children,
+    isSelected,
+    defaultSelected,
+    onChange,
+    isDisabled = false,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+    className,
+    style,
+    id,
+    type = 'button',
+  },
+  forwardedRef,
+) {
   return (
-    <button
-      {...mergeProps(buttonProps, focusProps)}
-      ref={setRefs}
+    <BaseToggle
+      ref={forwardedRef}
       id={id}
-      data-hud-toggle=""
-      data-pressed={state.isSelected ? 'true' : 'false'}
-      data-active={isPressed ? 'true' : 'false'}
-      data-focus-visible={isFocusVisible ? 'true' : 'false'}
-      data-state={state.isSelected ? 'pressed' : 'unpressed'}
-      className={cn(
-        'cursor-pointer appearance-none border border-[var(--line)] bg-transparent',
-        'px-4 py-2 font-[family-name:var(--hud-font-mono)] text-xs uppercase tracking-[0.14em]',
-        'text-[var(--muted)] hover:border-[var(--accent-d)] hover:text-[var(--ink)]',
-        state.isSelected &&
-          'border-[var(--accent)] bg-[var(--accent)] text-[var(--on-accent)] hover:border-[var(--accent)] hover:text-[var(--on-accent)]',
-        props.isDisabled && 'cursor-not-allowed opacity-40',
-        className,
-      )}
+      type={type}
+      pressed={isSelected}
+      defaultPressed={defaultSelected}
+      disabled={isDisabled}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
+      onPressedChange={(pressed) => onChange?.(pressed)}
       style={style}
-    >
-      {children}
-    </button>
+      render={(renderProps, state) => (
+        <button
+          {...renderProps}
+          data-hud-toggle=""
+          data-pressed={state.pressed ? 'true' : 'false'}
+          data-state={state.pressed ? 'pressed' : 'unpressed'}
+          className={cn(
+            'cursor-pointer appearance-none border border-[var(--line)] bg-transparent',
+            'px-4 py-2 font-[family-name:var(--hud-font-mono)] text-xs uppercase tracking-[0.14em]',
+            'text-[var(--muted)] hover:border-[var(--accent-d)] hover:text-[var(--ink)]',
+            state.pressed &&
+              'border-[var(--accent)] bg-[var(--accent)] text-[var(--on-accent)] hover:border-[var(--accent)] hover:text-[var(--on-accent)]',
+            state.disabled && 'cursor-not-allowed opacity-40',
+            className,
+          )}
+        >
+          {children}
+        </button>
+      )}
+    />
   )
 })

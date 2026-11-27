@@ -1,0 +1,22 @@
+{
+  "name": "@hud-ui/cli",
+  "version": "0.1.0",
+  "description": "CLI to install ownable hud-ui components and tokens directly into your React + Tailwind v4 app.",
+  "type": "module",
+  "bin": {
+    "hud-ui": "./bin/hud-ui.mjs"
+  },
+  "exports": {
+    ".": "./src/cli.mjs"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "lint": "oxlint src bin"
+  }
+}

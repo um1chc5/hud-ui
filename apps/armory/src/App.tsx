@@ -147,7 +147,7 @@ export function App() {
           <div className="armory-footer-left">
             <span className="armory-brand">HUD-UI // ARMORY</span>
             <span className="armory-footer-meta">
-              Ownable React 19 + Tailwind v4 + react-aria HUD kit
+              Ownable React 19 + Tailwind v4 + Base UI HUD kit
             </span>
           </div>
           <div className="armory-footer-links">

@@ -1,5 +1,10 @@
 import { useState } from 'react'
-import { getInstallCommand, getRegistryItemUrl, type PackageManager } from '../lib/registry'
+import {
+  getInstallCommand,
+  getRegistryItemUrl,
+  type InstallerCli,
+  type PackageManager,
+} from '../lib/registry'
 import { CopyButton } from './CopyButton'
 
 type InstallBarProps = {
@@ -10,8 +15,8 @@ const PMS: PackageManager[] = ['pnpm', 'npm', 'bun']
 
 export function InstallBar({ slug }: InstallBarProps) {
   const [pm, setPm] = useState<PackageManager>('pnpm')
-  const [mode, setMode] = useState<'namespace' | 'url'>('namespace')
-  const command = getInstallCommand(slug, pm, mode)
+  const [cli, setCli] = useState<InstallerCli>('hud-ui')
+  const command = getInstallCommand(slug, pm, cli)
 
   return (
     <div className="armory-install" role="region" aria-label={`Install ${slug}`}>
@@ -34,11 +39,11 @@ export function InstallBar({ slug }: InstallBarProps) {
         <div className="armory-install-mode">
           <button
             type="button"
-            onClick={() => setMode((m) => (m === 'namespace' ? 'url' : 'namespace'))}
+            onClick={() => setCli((c) => (c === 'hud-ui' ? 'shadcn' : 'hud-ui'))}
             className="armory-mode-toggle"
-            title="Switch between @hud namespace and direct registry URL"
+            title="Switch between @hud-ui/cli and shadcn CLI"
           >
-            {mode === 'namespace' ? '@hud alias' : 'direct URL'}
+            {cli === 'hud-ui' ? 'hud-ui CLI' : 'shadcn URL'}
           </button>
           <a
             href={getRegistryItemUrl(slug)}

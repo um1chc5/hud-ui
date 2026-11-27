@@ -88,7 +88,7 @@ const CATALOG: CatalogEntry[] = [
     route: 'component-tabs',
     name: 'Tabs',
     kind: 'UI Primitive',
-    summary: 'Roving-tabindex tabs & SegmentedControl powered by react-aria.',
+    summary: 'Roving-tabindex tabs & SegmentedControl powered by Base UI.',
   },
   {
     route: 'component-toggle',
@@ -153,8 +153,8 @@ export function LandingPage({ appearance, onUpdateAppearance }: LandingPageProps
         <div className="armory-hero-grid">
           <div>
             <div className="armory-eyebrow-row">
-              <span className="armory-eyebrow">SHADCN-COMPATIBLE REGISTRY</span>
-              <span className="armory-dep-tag">React 19 · Tailwind v4 · react-aria</span>
+              <span className="armory-eyebrow">OWNABLE HUD KIT · @HUD-UI/CLI</span>
+              <span className="armory-dep-tag">React 19 · Tailwind v4 · Base UI</span>
             </div>
             <h1 className="armory-hero-title">
               <TextScramble key={heroScrambleKey} text="TACTICAL HUD UI KIT" duration={850} />
@@ -162,7 +162,7 @@ export function LandingPage({ appearance, onUpdateAppearance }: LandingPageProps
             <p className="armory-hero-lead">
               Ownable source components built for mission dashboards, developer tools, and sci-fi
               interfaces. Four WCAG AA palettes, zero blurry transforms on body text, and
-              one-command <code>shadcn</code> registry installs.
+              one-command <code>hud-ui</code> CLI installs.
             </p>
             <div className="armory-hero-actions">
               <Link to="/docs/getting-started" className="armory-btn armory-btn-primary">
@@ -277,7 +277,7 @@ export function LandingPage({ appearance, onUpdateAppearance }: LandingPageProps
               {[
                 'Registry manifest compiled — 12 items ready',
                 'WCAG AA contrast verified on steel, teal, thermal, day',
-                'react-aria focus trap active on Dialog overlay',
+                'Base UI focus trap active on Dialog overlay',
                 'Motion guard listening to prefers-reduced-motion',
                 'Chamfer polygons routed through --hud-chamfer-polygon',
                 'Tab roving tabindex bound to ArrowLeft / ArrowRight',
@@ -299,7 +299,7 @@ export function LandingPage({ appearance, onUpdateAppearance }: LandingPageProps
 
         <Dialog isOpen={briefingOpen} onOpenChange={setBriefingOpen} title="Mission Briefing">
           <p className="m-0 text-sm text-[var(--ink)]">
-            This dialog uses <code>react-aria</code> overlays for focus containment, scroll lock,
+            This dialog uses <code>@base-ui/react</code> Dialog for focus containment, scroll lock,
             and <code>Esc</code> dismissal, styled with <code>CornerBrackets</code> and{' '}
             <code>clip-path</code> boot motion.
           </p>
@@ -371,10 +371,10 @@ export function LandingPage({ appearance, onUpdateAppearance }: LandingPageProps
           <div className="armory-catalog-card">
             <div>
               <span className="armory-eyebrow">01 · OWNABLE SOURCE</span>
-              <h3>Shadcn Registry DX</h3>
+              <h3>Own CLI &amp; Registry</h3>
               <p>
-                Install individual primitives via <code>@hud/&lt;component&gt;</code> or copy files
-                directly. No opaque package upgrades or runtime style lock-in.
+                Install individual primitives via <code>@hud-ui/cli</code> (or{' '}
+                <code>shadcn add</code>) directly into your repo. No runtime style lock-in.
               </p>
             </div>
           </div>
@@ -392,10 +392,10 @@ export function LandingPage({ appearance, onUpdateAppearance }: LandingPageProps
           <div className="armory-catalog-card">
             <div>
               <span className="armory-eyebrow">03 · ACCESSIBLE</span>
-              <h3>Keyboard &amp; WCAG AA</h3>
+              <h3>Base UI &amp; WCAG AA</h3>
               <p>
-                Interactive widgets wrap <code>react-aria</code> focus traps and roving tabindex,
-                with verified WCAG AA text contrast across dark and daylight palettes.
+                Interactive widgets wrap <code>@base-ui/react</code> focus traps and roving
+                tabindex, with verified WCAG AA text contrast across dark and daylight palettes.
               </p>
             </div>
           </div>
