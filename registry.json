@@ -1,0 +1,199 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "hud-ui",
+  "homepage": "https://github.com/um1chc5/hud-ui",
+  "items": [
+    {
+      "name": "hud-theme",
+      "type": "registry:style",
+      "title": "HUD Theme",
+      "description": "CSS tokens for steel, teal, thermal, and day palettes plus chamfer, glow, scrollbar, and motion chrome.",
+      "files": [
+        {
+          "source": "packages/ui/src/styles/tokens.css",
+          "path": "styles/hud-tokens.css",
+          "target": "src/styles/hud-tokens.css",
+          "type": "registry:file"
+        },
+        {
+          "source": "packages/ui/src/styles/hud.css",
+          "path": "styles/hud.css",
+          "target": "src/styles/hud.css",
+          "type": "registry:file"
+        },
+        {
+          "source": "packages/ui/src/lib/tokens.ts",
+          "path": "lib/tokens.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "docs": "Import `./styles/hud-tokens.css` and `./styles/hud.css` at your app root and set data-hud-palette, data-hud-glow, data-hud-motion, and data-hud-grid on <html>."
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "Class Utils",
+      "description": "cn() helper combining clsx and tailwind-merge.",
+      "dependencies": ["clsx", "tailwind-merge"],
+      "files": [
+        {
+          "source": "packages/ui/src/lib/utils.ts",
+          "path": "lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "hud-hooks",
+      "type": "registry:hook",
+      "title": "HUD Motion Hooks",
+      "description": "Hooks tracking OS prefers-reduced-motion and <html data-hud-motion>.",
+      "files": [
+        {
+          "source": "packages/ui/src/hooks/usePrefersReducedMotion.ts",
+          "path": "hooks/usePrefersReducedMotion.ts",
+          "type": "registry:hook"
+        },
+        {
+          "source": "packages/ui/src/hooks/useHudMotionEnabled.ts",
+          "path": "hooks/useHudMotionEnabled.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "corner-brackets",
+      "type": "registry:component",
+      "title": "CornerBrackets",
+      "description": "Decorative aria-hidden corner reticle brackets for relative HUD panels.",
+      "registryDependencies": ["utils", "hud-theme"],
+      "files": [
+        {
+          "source": "packages/ui/src/components/hud/CornerBrackets.tsx",
+          "path": "hud/CornerBrackets.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "chamfer-frame",
+      "type": "registry:component",
+      "title": "ChamferFrame",
+      "description": "Chamfered HUD container wrapper using clip-path (never transform).",
+      "registryDependencies": ["utils", "hud-theme"],
+      "files": [
+        {
+          "source": "packages/ui/src/components/hud/ChamferFrame.tsx",
+          "path": "hud/ChamferFrame.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "grid-bg",
+      "type": "registry:component",
+      "title": "GridBg",
+      "description": "Decorative tactical graph-grid overlay layer for local panels.",
+      "registryDependencies": ["utils", "hud-theme"],
+      "files": [
+        {
+          "source": "packages/ui/src/components/hud/GridBg.tsx",
+          "path": "hud/GridBg.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "Modal dialog built on react-aria overlays with focus trap, Esc dismissal, corner brackets, and chamfered panel motion.",
+      "dependencies": ["react-aria", "react-stately"],
+      "registryDependencies": ["utils", "corner-brackets", "hud-theme"],
+      "files": [
+        {
+          "source": "packages/ui/src/components/ui/Dialog.tsx",
+          "path": "components/ui/Dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Accessible ARIA tabs and SegmentedControl alias via react-aria with roving tabindex and chamfered active state.",
+      "dependencies": ["react-aria", "react-stately"],
+      "registryDependencies": ["utils", "hud-theme"],
+      "files": [
+        {
+          "source": "packages/ui/src/components/ui/Tabs.tsx",
+          "path": "components/ui/Tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "ARIA toggle button via react-aria with chamfered chip styling and accent pressed state.",
+      "dependencies": ["react-aria", "react-stately"],
+      "registryDependencies": ["utils", "hud-theme"],
+      "files": [
+        {
+          "source": "packages/ui/src/components/ui/Toggle.tsx",
+          "path": "components/ui/Toggle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "meter",
+      "type": "registry:ui",
+      "title": "Meter",
+      "description": "Scalar readout with role=meter in bar, segments, and ring variants.",
+      "registryDependencies": ["utils", "hud-theme"],
+      "files": [
+        {
+          "source": "packages/ui/src/components/ui/Meter.tsx",
+          "path": "components/ui/Meter.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "text-scramble",
+      "type": "registry:ui",
+      "title": "TextScramble",
+      "description": "rAF glyph scramble toward final text with aria-label preservation and reduced-motion opt-out.",
+      "registryDependencies": ["utils", "hud-hooks", "hud-theme"],
+      "files": [
+        {
+          "source": "packages/ui/src/components/ui/TextScramble.tsx",
+          "path": "components/ui/TextScramble.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "source": "packages/ui/src/components/ui/useTextScramble.ts",
+          "path": "components/ui/useTextScramble.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "scroll-panel",
+      "type": "registry:ui",
+      "title": "ScrollPanel",
+      "description": "Keyboard-scrollable region with HUD scrollbar, fade edges, and top readout bar.",
+      "registryDependencies": ["utils", "hud-theme"],
+      "files": [
+        {
+          "source": "packages/ui/src/components/ui/ScrollPanel.tsx",
+          "path": "components/ui/ScrollPanel.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}

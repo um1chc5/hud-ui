@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hud-hooks",
+  "type": "registry:hook",
+  "title": "HUD Motion Hooks",
+  "description": "Hooks tracking OS prefers-reduced-motion and <html data-hud-motion>.",
+  "files": [
+    {
+      "path": "hooks/usePrefersReducedMotion.ts",
+      "type": "registry:hook",
+      "content": "import { useEffect, useState } from 'react'\n\nconst QUERY = '(prefers-reduced-motion: reduce)'\n\nfunction readPrefersReduced(): boolean {\n  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return false\n  return window.matchMedia(QUERY).matches\n}\n\n/**\n * Returns `true` when the OS-level \"reduce motion\" preference is on.\n * SSR-safe: reads matchMedia on the client; defaults to `false` on the server.\n */\nexport function usePrefersReducedMotion(): boolean {\n  const [reduced, setReduced] = useState(readPrefersReduced)\n\n  useEffect(() => {\n    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return\n    const mql = window.matchMedia(QUERY)\n    setReduced(mql.matches)\n    const handler = (event: MediaQueryListEvent) => setReduced(event.matches)\n    if (typeof mql.addEventListener === 'function') {\n      mql.addEventListener('change', handler)\n      return () => mql.removeEventListener('change', handler)\n    }\n    mql.addListener(handler)\n    return () => mql.removeListener(handler)\n  }, [])\n\n  return reduced\n}\n"
+    },
+    {
+      "path": "hooks/useHudMotionEnabled.ts",
+      "type": "registry:hook",
+      "content": "import { useEffect, useState } from 'react'\nimport { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'\n\nfunction readMotionAttrOff(): boolean {\n  if (typeof document === 'undefined') return false\n  return document.documentElement.getAttribute('data-hud-motion') === 'off'\n}\n\n/**\n * Returns `true` when HUD motion is allowed:\n * 1. OS does not request reduced motion, AND\n * 2. `data-hud-motion` on `<html>` is not `\"off\"`.\n */\nexport function useHudMotionEnabled(): boolean {\n  const reducedMotion = usePrefersReducedMotion()\n  const [attrOff, setAttrOff] = useState(readMotionAttrOff)\n\n  useEffect(() => {\n    if (typeof document === 'undefined') return\n    const root = document.documentElement\n    const read = () => setAttrOff(root.getAttribute('data-hud-motion') === 'off')\n    read()\n    const mo = new MutationObserver(read)\n    mo.observe(root, { attributes: true, attributeFilter: ['data-hud-motion'] })\n    return () => mo.disconnect()\n  }, [])\n\n  return !reducedMotion && !attrOff\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "corner-brackets",
+  "type": "registry:component",
+  "title": "CornerBrackets",
+  "description": "Decorative aria-hidden corner reticle brackets for relative HUD panels.",
+  "registryDependencies": [
+    "utils",
+    "hud-theme"
+  ],
+  "files": [
+    {
+      "path": "hud/CornerBrackets.tsx",
+      "type": "registry:component",
+      "content": "import type { CSSProperties } from 'react'\nimport { cn } from '@/lib/utils'\n\nexport type CornerBracketsProps = {\n  className?: string\n  style?: CSSProperties\n}\n\n/** Decorative corner brackets. Always `aria-hidden`. Parent needs `relative`. */\nexport function CornerBrackets({ className, style }: CornerBracketsProps) {\n  return (\n    <span\n      data-hud-corner-brackets=\"\"\n      aria-hidden=\"true\"\n      className={cn(className)}\n      style={style}\n    />\n  )\n}\n"
+    }
+  ]
+}

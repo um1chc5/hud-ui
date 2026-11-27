@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chamfer-frame",
+  "type": "registry:component",
+  "title": "ChamferFrame",
+  "description": "Chamfered HUD container wrapper using clip-path (never transform).",
+  "registryDependencies": [
+    "utils",
+    "hud-theme"
+  ],
+  "files": [
+    {
+      "path": "hud/ChamferFrame.tsx",
+      "type": "registry:component",
+      "content": "import type { CSSProperties, ReactNode } from 'react'\nimport { cn } from '@/lib/utils'\n\nexport type ChamferSize = 'sm' | 'base' | 'lg'\n\nexport type ChamferFrameProps = {\n  size?: ChamferSize\n  className?: string\n  style?: CSSProperties\n  children?: ReactNode\n}\n\n/** Chamfered frame wrapper — clip-path only, no transform. */\nexport function ChamferFrame({\n  size = 'base',\n  className,\n  style,\n  children,\n}: ChamferFrameProps) {\n  return (\n    <div\n      data-hud-chamfer=\"\"\n      data-size={size}\n      className={cn('relative border border-[var(--line)] bg-[var(--sheet-solid)]', className)}\n      style={style}\n    >\n      {children}\n    </div>\n  )\n}\n"
+    }
+  ]
+}

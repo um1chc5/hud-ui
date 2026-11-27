@@ -1,54 +1,77 @@
 import { useState } from 'react'
 import { Toggle } from '@hud-ui/ui'
+import toggleSource from '../../../../packages/ui/src/components/ui/Toggle.tsx?raw'
+import { ComponentDocShell } from '../components/ComponentDocShell'
 
-export function TogglePage() {
-  const [a, setA] = useState(false)
-  const [b, setB] = useState(true)
+const USAGE_CODE = `import { useState } from 'react'
+import { Toggle } from '@/components/ui/Toggle'
+
+export function ScannerSwitch() {
+  const [active, setActive] = useState(true)
 
   return (
-    <>
-      <header className="armory-page-header">
-        <h1>Toggle</h1>
-        <p>
-          ARIA toggle button (<code>aria-pressed</code>). Space / Enter flip. Chamfered HUD chip
-          with accent fill when pressed.
-        </p>
-      </header>
+    <Toggle isSelected={active} onChange={setActive}>
+      Scanner {active ? 'ON' : 'OFF'}
+    </Toggle>
+  )
+}`
 
-      <section>
-        <h2 className="armory-section-title">Live</h2>
-        <div className="armory-demo" style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-          <Toggle isSelected={a} onChange={setA}>
-            Scanner
-          </Toggle>
-          <Toggle isSelected={b} onChange={setB}>
-            Night vision
-          </Toggle>
-          <Toggle isDisabled>Offline</Toggle>
-        </div>
-      </section>
+export function TogglePage() {
+  return (
+    <ComponentDocShell
+      title="Toggle"
+      slug="toggle"
+      category="UI Primitive"
+      description="ARIA toggle button (aria-pressed) powered by react-aria. Chamfered HUD chip with solid accent fill and optional glow when pressed."
+      dependencies={['react-aria', 'react-stately']}
+      demo={<ToggleDemo />}
+      usageCode={USAGE_CODE}
+      sources={[{ filename: 'components/ui/Toggle.tsx', code: toggleSource }]}
+      propsList={[
+        {
+          name: 'children',
+          type: 'ReactNode',
+          description: 'Button label content.',
+        },
+        {
+          name: 'isSelected',
+          type: 'boolean',
+          description: 'Controlled pressed state.',
+        },
+        {
+          name: 'defaultSelected',
+          type: 'boolean',
+          description: 'Initial pressed state for uncontrolled usage.',
+        },
+        {
+          name: 'onChange',
+          type: '(isSelected: boolean) => void',
+          description: 'Fired when toggled.',
+        },
+        {
+          name: 'isDisabled',
+          type: 'boolean',
+          defaultValue: 'false',
+          description: 'Disables pointer and keyboard activation.',
+        },
+      ]}
+      keyboardList={[{ keys: 'Space / Enter', description: 'Flips the pressed state.' }]}
+    />
+  )
+}
 
-      <section>
-        <h2 className="armory-section-title">Props</h2>
-        <dl className="armory-props">
-          <dt>isSelected / defaultSelected</dt>
-          <dd>Controlled or uncontrolled pressed state.</dd>
-          <dt>onChange</dt>
-          <dd>
-            <code>(isSelected: boolean) =&gt; void</code>
-          </dd>
-          <dt>isDisabled</dt>
-          <dd>Blocks interaction.</dd>
-        </dl>
-      </section>
-
-      <section>
-        <h2 className="armory-section-title">Keyboard</h2>
-        <dl className="armory-props">
-          <dt>Space / Enter</dt>
-          <dd>Toggle pressed state.</dd>
-        </dl>
-      </section>
-    </>
+function ToggleDemo() {
+  const [a, setA] = useState(false)
+  const [b, setB] = useState(true)
+  return (
+    <div className="flex flex-wrap gap-3">
+      <Toggle isSelected={a} onChange={setA}>
+        Scanner
+      </Toggle>
+      <Toggle isSelected={b} onChange={setB}>
+        Night vision
+      </Toggle>
+      <Toggle isDisabled>Offline</Toggle>
+    </div>
   )
 }

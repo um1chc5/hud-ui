@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs",
+  "type": "registry:ui",
+  "title": "Tabs",
+  "description": "Accessible ARIA tabs and SegmentedControl alias via react-aria with roving tabindex and chamfered active state.",
+  "dependencies": [
+    "react-aria",
+    "react-stately"
+  ],
+  "registryDependencies": [
+    "utils",
+    "hud-theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/Tabs.tsx",
+      "type": "registry:ui",
+      "content": "import {\n  forwardRef,\n  useMemo,\n  useRef,\n  type CSSProperties,\n  type ReactElement,\n  type ReactNode,\n} from 'react'\nimport { Item, useTabListState, type TabListStateOptions } from 'react-stately'\nimport { useFocusRing, useTab, useTabList, useTabPanel } from 'react-aria'\nimport type { Node } from 'react-stately'\nimport { cn } from '@/lib/utils'\n\nexport type TabOrientation = 'horizontal' | 'vertical'\nexport type TabKey = string | number\n\nexport type TabsProps = {\n  'aria-label'?: string\n  children: ReactElement | ReactElement[]\n  selectedKey?: TabKey\n  defaultSelectedKey?: TabKey\n  onSelectionChange?: (key: TabKey) => void\n  orientation?: TabOrientation\n  isDisabled?: boolean\n  disabledKeys?: Iterable<TabKey>\n  className?: string\n  style?: CSSProperties\n  id?: string\n}\n\nexport const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(props, forwardedRef) {\n  const { orientation = 'horizontal', style, id, className } = props\n  const normalizedProps = useMemo(\n    () =>\n      ({\n        ...props,\n        selectionMode: 'single',\n        children: props.children,\n      }) as unknown as TabListStateOptions<object>,\n    [props],\n  )\n  const state = useTabListState(normalizedProps)\n  const listRef = useRef<HTMLDivElement>(null)\n  const { tabListProps } = useTabList({ ...normalizedProps, orientation }, state, listRef)\n  const items = [...state.collection] as Node<object>[]\n\n  return (\n    <div\n      ref={forwardedRef}\n      data-hud-tabs=\"\"\n      id={id}\n      style={style}\n      className={cn('flex flex-col gap-3', className)}\n    >\n      <div\n        {...tabListProps}\n        ref={listRef}\n        data-hud-tab-list=\"\"\n        data-orientation={orientation}\n        className={cn(\n          'flex flex-wrap gap-2',\n          orientation === 'vertical' && 'flex-col items-start',\n        )}\n      >\n        {items.map((item) => (\n          <TabButton key={item.key} item={item} state={state} />\n        ))}\n      </div>\n      {state.selectedItem ? <TabPanel key={state.selectedItem.key} state={state} /> : null}\n    </div>\n  )\n})\n\ntype TabState = ReturnType<typeof useTabListState>\n\nfunction TabButton({ item, state }: { item: Node<object>; state: TabState }) {\n  const ref = useRef<HTMLDivElement>(null)\n  const { tabProps, isSelected, isDisabled } = useTab({ key: item.key }, state, ref)\n  const { isFocusVisible, focusProps } = useFocusRing()\n  const itemProps = item.props as { title?: ReactNode }\n  const label = itemProps.title ?? (item.rendered as ReactNode)\n  return (\n    <div\n      {...tabProps}\n      {...focusProps}\n      ref={ref}\n      data-hud-tab=\"\"\n      data-selected={isSelected ? 'true' : 'false'}\n      data-disabled={isDisabled ? 'true' : 'false'}\n      data-focus-visible={isFocusVisible ? 'true' : 'false'}\n      className={cn(\n        'cursor-pointer appearance-none border border-[var(--line)] bg-transparent',\n        'px-4 py-2 font-[family-name:var(--hud-font-mono)] text-xs uppercase tracking-[0.14em]',\n        'text-[var(--muted)] hover:border-[var(--accent-d)] hover:text-[var(--ink)]',\n        isSelected &&\n          'border-[var(--accent)] bg-[var(--accent)] text-[var(--on-accent)] hover:border-[var(--accent)] hover:text-[var(--on-accent)]',\n        isDisabled && 'cursor-not-allowed opacity-40',\n      )}\n    >\n      {label}\n    </div>\n  )\n}\n\nfunction TabPanel({ state }: { state: TabState }) {\n  const ref = useRef<HTMLDivElement>(null)\n  const { tabPanelProps } = useTabPanel({}, state, ref)\n  const selected = state.selectedItem as Node<object> | null | undefined\n  const selectedProps = (selected?.props ?? {}) as { children?: ReactNode }\n  return (\n    <div\n      {...tabPanelProps}\n      ref={ref}\n      data-hud-tab-panel=\"\"\n      className=\"py-3 text-[var(--ink)]\"\n    >\n      {selectedProps.children}\n    </div>\n  )\n}\n\nexport { Item }\nexport const Tab = Item\nexport const SegmentedControl = Tabs\nexport type SegmentedControlProps = TabsProps\n"
+    }
+  ]
+}

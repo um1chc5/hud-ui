@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle",
+  "type": "registry:ui",
+  "title": "Toggle",
+  "description": "ARIA toggle button via react-aria with chamfered chip styling and accent pressed state.",
+  "dependencies": [
+    "react-aria",
+    "react-stately"
+  ],
+  "registryDependencies": [
+    "utils",
+    "hud-theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/Toggle.tsx",
+      "type": "registry:ui",
+      "content": "import { forwardRef, useRef, type CSSProperties, type ReactNode } from 'react'\nimport { mergeProps, useFocusRing, useToggleButton } from 'react-aria'\nimport { useToggleState } from 'react-stately'\nimport { cn } from '@/lib/utils'\n\nexport type ToggleProps = {\n  children: ReactNode\n  isSelected?: boolean\n  defaultSelected?: boolean\n  onChange?: (isSelected: boolean) => void\n  isDisabled?: boolean\n  'aria-label'?: string\n  'aria-labelledby'?: string\n  className?: string\n  style?: CSSProperties\n  id?: string\n  type?: 'button' | 'submit' | 'reset'\n}\n\nexport const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(function Toggle(props, ref) {\n  const { children, style, id, className } = props\n  const state = useToggleState(props)\n  const internalRef = useRef<HTMLButtonElement>(null)\n  const { buttonProps, isPressed } = useToggleButton(props, state, internalRef)\n  const { isFocusVisible, focusProps } = useFocusRing()\n\n  const setRefs = (node: HTMLButtonElement | null) => {\n    internalRef.current = node\n    if (typeof ref === 'function') ref(node)\n    else if (ref) ref.current = node\n  }\n\n  return (\n    <button\n      {...mergeProps(buttonProps, focusProps)}\n      ref={setRefs}\n      id={id}\n      data-hud-toggle=\"\"\n      data-pressed={state.isSelected ? 'true' : 'false'}\n      data-active={isPressed ? 'true' : 'false'}\n      data-focus-visible={isFocusVisible ? 'true' : 'false'}\n      data-state={state.isSelected ? 'pressed' : 'unpressed'}\n      className={cn(\n        'cursor-pointer appearance-none border border-[var(--line)] bg-transparent',\n        'px-4 py-2 font-[family-name:var(--hud-font-mono)] text-xs uppercase tracking-[0.14em]',\n        'text-[var(--muted)] hover:border-[var(--accent-d)] hover:text-[var(--ink)]',\n        state.isSelected &&\n          'border-[var(--accent)] bg-[var(--accent)] text-[var(--on-accent)] hover:border-[var(--accent)] hover:text-[var(--on-accent)]',\n        props.isDisabled && 'cursor-not-allowed opacity-40',\n        className,\n      )}\n      style={style}\n    >\n      {children}\n    </button>\n  )\n})\n"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-scramble",
+  "type": "registry:ui",
+  "title": "TextScramble",
+  "description": "rAF glyph scramble toward final text with aria-label preservation and reduced-motion opt-out.",
+  "registryDependencies": [
+    "utils",
+    "hud-hooks",
+    "hud-theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/TextScramble.tsx",
+      "type": "registry:ui",
+      "content": "import { forwardRef, type CSSProperties } from 'react'\nimport { cn } from '@/lib/utils'\nimport { useTextScramble, type UseTextScrambleOptions } from './useTextScramble'\n\nexport type TextScrambleProps = UseTextScrambleOptions & {\n  text: string\n  as?: 'span' | 'div' | 'h1' | 'h2' | 'h3' | 'h4' | 'p'\n  className?: string\n  style?: CSSProperties\n  id?: string\n  'aria-label'?: string\n}\n\n/**\n * Visible glyphs scramble; `aria-label` always holds the final string.\n * Reduced motion → instant final text.\n */\nexport const TextScramble = forwardRef<HTMLElement, TextScrambleProps>(function TextScramble(\n  {\n    text,\n    as: Tag = 'span',\n    className,\n    style,\n    id,\n    'aria-label': ariaLabel,\n    duration,\n    glyphs,\n    onDone,\n  },\n  ref,\n) {\n  const options: UseTextScrambleOptions = {}\n  if (duration !== undefined) options.duration = duration\n  if (glyphs !== undefined) options.glyphs = glyphs\n  if (onDone !== undefined) options.onDone = onDone\n  const { display, phase } = useTextScramble(text, options)\n  const needsRole = Tag === 'span' || Tag === 'div'\n\n  return (\n    <Tag\n      ref={ref as never}\n      id={id}\n      role={needsRole ? 'group' : undefined}\n      aria-label={ariaLabel ?? text}\n      data-hud-text-scramble=\"\"\n      data-phase={phase}\n      className={cn(\n        'whitespace-pre font-[family-name:var(--hud-font-mono)] tracking-[0.12em]',\n        'text-[var(--ink)] [font-variant-numeric:tabular-nums]',\n        className,\n      )}\n      style={style}\n    >\n      <span aria-hidden=\"true\">{display}</span>\n    </Tag>\n  )\n})\n"
+    },
+    {
+      "path": "components/ui/useTextScramble.ts",
+      "type": "registry:ui",
+      "content": "import { useEffect, useRef, useState } from 'react'\nimport { useHudMotionEnabled } from '@/hooks/useHudMotionEnabled'\n\nexport type TextScramblePhase = 'idle' | 'running' | 'done'\n\nexport type UseTextScrambleOptions = {\n  duration?: number\n  glyphs?: string\n  onDone?: () => void\n}\n\nconst DEFAULT_GLYPHS = '#%&*+=<>/\\\\|01ABCDEFGHKLMNPRSTVXYZ'\n\nfunction randomGlyph(pool: string): string {\n  if (!pool.length) return ' '\n  return pool.charAt(Math.floor(Math.random() * pool.length)) ?? ' '\n}\n\n/**\n * Scrambles toward `target` via rAF. Honours reduced motion + data-hud-motion.\n * Aborts on unmount or when `target` changes.\n */\nexport function useTextScramble(target: string, options: UseTextScrambleOptions = {}) {\n  const { duration = 800, glyphs = DEFAULT_GLYPHS, onDone } = options\n  const motionEnabled = useHudMotionEnabled()\n  const [display, setDisplay] = useState<string>(target)\n  const [phase, setPhase] = useState<TextScramblePhase>('idle')\n  const [restartKey, setRestartKey] = useState(0)\n  const onDoneRef = useRef(onDone)\n  onDoneRef.current = onDone\n\n  useEffect(() => {\n    if (!motionEnabled) {\n      setDisplay(target)\n      setPhase('done')\n      onDoneRef.current?.()\n      return\n    }\n\n    if (typeof window === 'undefined' || typeof window.requestAnimationFrame !== 'function') {\n      setDisplay(target)\n      setPhase('done')\n      onDoneRef.current?.()\n      return\n    }\n\n    let rafId = 0\n    let startTs = 0\n    let cancelled = false\n    const chars = Array.from(target)\n    const total = Math.max(1, chars.length)\n\n    setPhase('running')\n    setDisplay(chars.map((ch) => (ch === ' ' ? ' ' : randomGlyph(glyphs))).join(''))\n\n    const step = (ts: number) => {\n      if (cancelled) return\n      if (!startTs) startTs = ts\n      const progress = Math.min(1, (ts - startTs) / Math.max(1, duration))\n      const settledUpTo = progress * total\n      const next = chars\n        .map((ch, i) => {\n          if (ch === ' ') return ' '\n          if (i < settledUpTo) return ch\n          return randomGlyph(glyphs)\n        })\n        .join('')\n      setDisplay(next)\n\n      if (progress < 1) {\n        rafId = window.requestAnimationFrame(step)\n      } else {\n        setDisplay(target)\n        setPhase('done')\n        onDoneRef.current?.()\n      }\n    }\n\n    rafId = window.requestAnimationFrame(step)\n    return () => {\n      cancelled = true\n      if (rafId) window.cancelAnimationFrame(rafId)\n    }\n  }, [target, duration, glyphs, motionEnabled, restartKey])\n\n  return { display, phase, restart: () => setRestartKey((k) => k + 1) }\n}\n"
+    }
+  ]
+}

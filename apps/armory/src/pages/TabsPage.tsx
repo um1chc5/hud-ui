@@ -1,19 +1,32 @@
 import { Item, SegmentedControl, Tabs } from '@hud-ui/ui'
+import tabsSource from '../../../../packages/ui/src/components/ui/Tabs.tsx?raw'
+import { ComponentDocShell } from '../components/ComponentDocShell'
+
+const USAGE_CODE = `import { Item, SegmentedControl, Tabs } from '@/components/ui/Tabs'
+
+export function TelemetryTabs() {
+  return (
+    <Tabs aria-label="Status" defaultSelectedKey="signal">
+      <Item key="signal" title="Signal">
+        Uplink stable. Latency 42ms.
+      </Item>
+      <Item key="power" title="Power">
+        Cap banks at 78%. Thermal nominal.
+      </Item>
+    </Tabs>
+  )
+}`
 
 export function TabsPage() {
   return (
-    <>
-      <header className="armory-page-header">
-        <h1>Tabs</h1>
-        <p>
-          ARIA tabs via react-aria — roving tabindex, arrow keys, Home/End. Alias{' '}
-          <code>SegmentedControl</code> for the same component.
-        </p>
-      </header>
-
-      <section>
-        <h2 className="armory-section-title">Live</h2>
-        <div className="armory-demo">
+    <ComponentDocShell
+      title="Tabs"
+      slug="tabs"
+      category="UI Primitive"
+      description="ARIA tabs via react-aria with roving tabindex, arrow-key navigation, and Home/End support. Also exports SegmentedControl and Tab aliases."
+      dependencies={['react-aria', 'react-stately']}
+      demo={
+        <div className="flex flex-col gap-6">
           <Tabs aria-label="Status" defaultSelectedKey="signal">
             <Item key="signal" title="Signal">
               Uplink stable. Latency 42ms.
@@ -34,33 +47,41 @@ export function TabsPage() {
             </Item>
           </SegmentedControl>
         </div>
-      </section>
-
-      <section>
-        <h2 className="armory-section-title">Props</h2>
-        <dl className="armory-props">
-          <dt>children</dt>
-          <dd>
-            <code>&lt;Item key title&gt;panel&lt;/Item&gt;</code>
-          </dd>
-          <dt>selectedKey / defaultSelectedKey</dt>
-          <dd>Controlled or uncontrolled selection.</dd>
-          <dt>orientation</dt>
-          <dd>
-            <code>horizontal</code> (default) or <code>vertical</code>.
-          </dd>
-        </dl>
-      </section>
-
-      <section>
-        <h2 className="armory-section-title">Keyboard</h2>
-        <dl className="armory-props">
-          <dt>← → / ↑ ↓</dt>
-          <dd>Move selection (respects orientation).</dd>
-          <dt>Home / End</dt>
-          <dd>First / last tab.</dd>
-        </dl>
-      </section>
-    </>
+      }
+      usageCode={USAGE_CODE}
+      sources={[{ filename: 'components/ui/Tabs.tsx', code: tabsSource }]}
+      propsList={[
+        {
+          name: 'children',
+          type: 'ReactElement | ReactElement[]',
+          description: '<Item key="..." title="...">panel</Item> entries.',
+        },
+        {
+          name: 'selectedKey',
+          type: 'string | number',
+          description: 'Controlled active tab key.',
+        },
+        {
+          name: 'defaultSelectedKey',
+          type: 'string | number',
+          description: 'Initial active tab key for uncontrolled usage.',
+        },
+        {
+          name: 'onSelectionChange',
+          type: '(key: TabKey) => void',
+          description: 'Called whenever the selected tab changes.',
+        },
+        {
+          name: 'orientation',
+          type: "'horizontal' | 'vertical'",
+          defaultValue: "'horizontal'",
+          description: 'Layout and arrow-key direction.',
+        },
+      ]}
+      keyboardList={[
+        { keys: '← → / ↑ ↓', description: 'Moves tab selection (respects orientation).' },
+        { keys: 'Home / End', description: 'Jumps to the first or last tab.' },
+      ]}
+    />
   )
 }

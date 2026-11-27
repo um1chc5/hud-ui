@@ -5,8 +5,9 @@
   "type": "module",
   "packageManager": "pnpm@10.32.1",
   "scripts": {
-    "dev": "pnpm --filter @hud-ui/armory dev",
-    "build": "pnpm --filter @hud-ui/armory build",
+    "dev": "pnpm build:registry && pnpm --filter @hud-ui/armory dev",
+    "build:registry": "node scripts/build-registry.mjs",
+    "build": "pnpm build:registry && pnpm --filter @hud-ui/armory build",
     "lint": "oxlint packages apps",
     "typecheck": "pnpm -r typecheck",
     "test": "vitest run",
@@ -15,7 +16,9 @@
     "format:check": "prettier --check ."
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"]
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "devDependencies": {
     "@testing-library/jest-dom": "6.9.1",

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog",
+  "type": "registry:ui",
+  "title": "Dialog",
+  "description": "Modal dialog built on react-aria overlays with focus trap, Esc dismissal, corner brackets, and chamfered panel motion.",
+  "dependencies": [
+    "react-aria",
+    "react-stately"
+  ],
+  "registryDependencies": [
+    "utils",
+    "corner-brackets",
+    "hud-theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/Dialog.tsx",
+      "type": "registry:ui",
+      "content": "import {\n  forwardRef,\n  useId,\n  useRef,\n  type CSSProperties,\n  type ReactNode,\n  type Ref,\n} from 'react'\nimport {\n  FocusScope,\n  Overlay,\n  mergeProps,\n  useDialog,\n  useModalOverlay,\n  usePreventScroll,\n} from 'react-aria'\nimport { useOverlayTriggerState } from 'react-stately'\nimport { cn } from '@/lib/utils'\nimport { CornerBrackets } from '@/components/hud/CornerBrackets'\n\nexport type DialogProps = {\n  isOpen: boolean\n  onOpenChange: (open: boolean) => void\n  title: string\n  children: ReactNode\n  isDismissable?: boolean\n  isKeyboardDismissDisabled?: boolean\n  className?: string\n  overlayClassName?: string\n  style?: CSSProperties\n  id?: string\n}\n\n/**\n * Modal Dialog — focus trap, Esc, return focus, chamfered HUD panel.\n * Boot-open uses opacity / translate / clip-path (never transform).\n */\nexport const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(props, forwardedRef) {\n  const { isOpen, onOpenChange } = props\n  const state = useOverlayTriggerState({ isOpen, onOpenChange })\n  if (!state.isOpen) return null\n  return <DialogImpl {...props} state={state} forwardedRef={forwardedRef} />\n})\n\ntype DialogImplProps = DialogProps & {\n  state: ReturnType<typeof useOverlayTriggerState>\n  forwardedRef: Ref<HTMLDivElement>\n}\n\nfunction DialogImpl({\n  state,\n  title,\n  children,\n  isDismissable = true,\n  isKeyboardDismissDisabled = false,\n  className,\n  overlayClassName,\n  style,\n  id,\n  forwardedRef,\n}: DialogImplProps) {\n  const ref = useRef<HTMLDivElement>(null)\n  const { modalProps, underlayProps } = useModalOverlay(\n    { isDismissable, isKeyboardDismissDisabled },\n    state,\n    ref,\n  )\n  const { dialogProps, titleProps } = useDialog({}, ref)\n  usePreventScroll()\n\n  const titleId = useId()\n\n  const setRefs = (node: HTMLDivElement | null) => {\n    ref.current = node\n    if (typeof forwardedRef === 'function') forwardedRef(node)\n    else if (forwardedRef) forwardedRef.current = node\n  }\n\n  return (\n    <Overlay>\n      <div\n        {...underlayProps}\n        data-hud-dialog-overlay=\"\"\n        data-state={state.isOpen ? 'open' : 'closed'}\n        className={cn(\n          'fixed inset-0 z-[100] grid place-items-center bg-[var(--scrim)] p-4',\n          overlayClassName,\n        )}\n      >\n        <FocusScope contain restoreFocus autoFocus>\n          <div\n            {...mergeProps(modalProps, dialogProps)}\n            ref={setRefs}\n            id={id}\n            aria-labelledby={titleId}\n            data-hud-dialog=\"\"\n            data-state={state.isOpen ? 'open' : 'closed'}\n            className={cn(\n              'relative flex max-h-[86vh] min-w-[min(480px,100%)] max-w-[min(640px,100%)]',\n              'flex-col gap-3 border border-[var(--line)] bg-[var(--sheet-solid)]',\n              'p-5 pb-4 font-[family-name:var(--hud-font-body)] text-[var(--ink)]',\n              className,\n            )}\n            style={style}\n          >\n            <CornerBrackets />\n            <h2\n              {...titleProps}\n              id={titleId}\n              data-hud-dialog-title=\"\"\n              className=\"m-0 font-[family-name:var(--hud-font-display)] text-lg font-semibold uppercase tracking-[0.08em] text-[var(--ink)]\"\n            >\n              {title}\n            </h2>\n            {children}\n          </div>\n        </FocusScope>\n      </div>\n    </Overlay>\n  )\n}\n"
+    }
+  ]
+}

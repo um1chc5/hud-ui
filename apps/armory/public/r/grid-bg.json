@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "grid-bg",
+  "type": "registry:component",
+  "title": "GridBg",
+  "description": "Decorative tactical graph-grid overlay layer for local panels.",
+  "registryDependencies": [
+    "utils",
+    "hud-theme"
+  ],
+  "files": [
+    {
+      "path": "hud/GridBg.tsx",
+      "type": "registry:component",
+      "content": "import type { CSSProperties } from 'react'\nimport { cn } from '@/lib/utils'\n\nexport type GridBgProps = {\n  className?: string\n  style?: CSSProperties\n}\n\n/**\n * Decorative graph-grid layer. Prefer `data-hud-grid=\"on\"` on `<html>` for\n * full-page grids; use this when you need a local panel grid.\n */\nexport function GridBg({ className, style }: GridBgProps) {\n  return (\n    <div\n      aria-hidden=\"true\"\n      data-hud-grid-bg=\"\"\n      className={cn('pointer-events-none absolute inset-0', className)}\n      style={{\n        backgroundImage:\n          'linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px)',\n        backgroundSize: '32px 32px',\n        ...style,\n      }}\n    />\n  )\n}\n"
+    }
+  ]
+}

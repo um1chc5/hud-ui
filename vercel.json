@@ -1,0 +1,8 @@
+{
+  "buildCommand": "pnpm build:registry && pnpm build",
+  "outputDirectory": "apps/armory/dist",
+  "rewrites": [
+    { "source": "/r/(.*)", "destination": "/r/$1" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
